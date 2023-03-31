@@ -1,5 +1,5 @@
 var myModal = new bootstrap.Modal(document.getElementById("streamingAppModal"));
-
+var appNames =[];
 /* 
 ididsplay lang yung streaming apps
 */
@@ -40,11 +40,11 @@ function createEditStreamingApps() {
 			/* 
 			ipapakita lang sa toast yung responseText 
 			 */
-				createToast(http.responseText, "success");
-				resetFields();
-				/* tinawag to para automatic nang mashow yung data na kakacreate lang */
-				readStreamingApp();
-				myModal.hide();
+			createToast(http.responseText, "success");
+			resetFields();
+			/* tinawag to para automatic nang mashow yung data na kakacreate lang */
+			readStreamingApp();
+			myModal.hide();
 		} else {
 			document.getElementById("message").innerHTML = http.responseText;
 		}
@@ -81,10 +81,10 @@ function resetFields() {
 	document.getElementById("otherContent").style.opacity = "0";
 	document.getElementById("appName").readOnly = false;
 	document.getElementById("appName").style.pointerEvents = "auto";
-/*
-dahil maraming checkbox sa index.php, gagamit ng  querySelectorAll para makuha lahat ng checkbox then
-mag iiterate isa-isa para ma uncheck sila
-*/
+	/*
+	dahil maraming checkbox sa index.php, gagamit ng  querySelectorAll para makuha lahat ng checkbox then
+	mag iiterate isa-isa para ma uncheck sila
+	*/
 	var checkboxes = document.querySelectorAll("input[type=checkbox]");
 	for (var checkbox of checkboxes) {
 		checkbox.checked = false;
@@ -187,7 +187,7 @@ function getToEditStreamingApp(toGet) {
 						*/
 						var platformsArray = platforms.split(', ');
 						var typeOfContentsArray = typeOfContents.split(', ');
-						
+
 						/* 
 						magiiterate dun sa array para ichecked yung corresponding checkbox nila.
 						yung _.camelCase, galing to sa lodash library. automatic niyang ginagawang camelcase lahat ng string na
@@ -210,13 +210,13 @@ function getToEditStreamingApp(toGet) {
 								otherTypeOfContent.push(typeOfContent);
 							}
 						}
-						
+
 						/* 
 						ishoshow lang yung input field kung may nakalagay sa kanyang value
 						*/
 						if (otherTypeOfContent != "") {
 							document.getElementById("otherContent").style.opacity = "1";
-							document.getElementById("otherContent").value = otherTypeOfContent.join(', ') ;
+							document.getElementById("otherContent").value = otherTypeOfContent.join(', ');
 							document.getElementById("others").checked = true;
 							document.getElementById("otherContent").readOnly = false;
 							document.getElementById("otherContent").style.pointerEvents = "auto";
@@ -233,7 +233,7 @@ function getToEditStreamingApp(toGet) {
 
 					}
 				}
-			} 
+			}
 		};
 		http.open("GET", "streamingApps.xml", true);
 		http.send();
@@ -270,11 +270,11 @@ function validate() {
 			validateInput("picture", "pictureMessage", "picture");
 		});
 	}
-		document.getElementById("picture").addEventListener("change", function (e) {
-			document.getElementById("pictureDisplay").src = URL.createObjectURL(e.target.files[0]);
-			validateInput("picture", "pictureMessage", "picture");
-		});
-	
+	document.getElementById("picture").addEventListener("change", function (e) {
+		document.getElementById("pictureDisplay").src = URL.createObjectURL(e.target.files[0]);
+		validateInput("picture", "pictureMessage", "picture");
+	});
+
 }
 
 /* 
@@ -283,7 +283,7 @@ function validate() {
 	type = ginamit lang sa mga condition
 	 */
 function validateInput(input, element, type) {
-	
+
 	/* 
 	chineckeck lang kung walang laman yung mga input fields, pag wala mababago yung border ng input field
 	tapos may lalabas na error message
@@ -316,7 +316,7 @@ function validateInput(input, element, type) {
 			var picture = document.getElementById(`${input}`).value;
 			var dotIndex = picture.lastIndexOf(".") + 1;
 			var filyType = picture.substr(dotIndex, picture.length).toLowerCase();
-		
+
 			/* 
 			chineckeck yung allowed file type, dapat JPG JPEG at PNG lang, hindi mauupload pag iba
 			 */
@@ -340,31 +340,30 @@ function validateInput(input, element, type) {
 		}
 
 		/* 
-			chineckeck kung yung appname ay unique, may ajax call to
+			chineckeck kung yung appname ay unique
+			pag clinick yung create, tinatawag yung function na getAppNames tapos iniistore lahat ng appname sa xml sa  array
+			then dito nagiiterate sa kada array kung nag match ba yung array sa tinype ng user.
+			mas better na approch yung nasa async await, Promise saka callback na try ko na ayaw parin gumana
 			 */
 		if (type == "unique") {
-			http = new XMLHttpRequest();
-			http.onreadystatechange = function () {
-				if (http.readyState == 4 && http.status == 200) {
-					if (http.responseText != "unique") {
-						document.getElementById(`${input}`).style.border = "red 1px solid";
-						document.getElementById(`${element}`).innerHTML = http.responseText;
-					}
+			var inputAppName = document.getElementById(`${input}`).value;
+			for (appName of appNames) {
+				if (appName.toLowerCase() == inputAppName.toLowerCase()) {
+					document.getElementById(`${input}`).style.border = "red 1px solid";
+					document.getElementById(`${element}`).innerHTML = `${appName} already exist.`;
+					break;
 				}
-			};
-			http.open("GET", `process/validateAppName.php?appName=${document.getElementById(`${input}`).value}`, true);
-			http.send();
+			}
 		}
 	}
-
 	/* 
 	para to sa button chinecheck niya kung lahat ng requirements ay na meet, 
 	pag nameet na pwede nang iclick yung button, pag hindi pa naka disabled muna
 	*/
-	if ((document.getElementById("appName").value.length == 0) || (document.getElementById("basePlan").value.length == 0) ||
+	if (document.getElementById("appNameMessage").innerHTML.length != 0 || (document.getElementById("appName").value.length == 0) || (document.getElementById("basePlan").value.length == 0) ||
 		(document.getElementById("launchDate").value.length == 0) || (document.getElementById("platforms").value.length == 0) || (
-		(document.getElementById("typeOfContents").value.length == 0 && document.getElementById("otherContent").value.length == 0)) ||
-		(document.getElementById("picture").value.length == 0 && document.getElementById("editPicture").value.length == 0) || (isNaN(document.getElementById("basePlan").value)) || document.getElementById("appNameMessage").innerHTML.length != 0) {
+			(document.getElementById("typeOfContents").value.length == 0 && document.getElementById("otherContent").value.length == 0)) ||
+		(document.getElementById("picture").value.length == 0 && document.getElementById("editPicture").value.length == 0) || (isNaN(document.getElementById("basePlan").value))) {
 		document.getElementById("modalButton").disabled = true;
 	} else {
 		document.getElementById("modalButton").disabled = false;
@@ -372,14 +371,30 @@ function validateInput(input, element, type) {
 }
 
 
+function getAppNames() {
+		http = new XMLHttpRequest();
+		http.onreadystatechange = function () {
+			if (http.readyState == 4 && http.status == 200) {
+				xmlDocument = http.responseXML;
+				streamingApps = xmlDocument.getElementsByTagName("streamingApp");
+				for (streamingApp of streamingApps) {
+					var appName = streamingApp.childNodes[1].childNodes[0].nodeValue;
+					appNames.push(appName);
+				}
+			}
+		}
+		http.open("GET", "streamingApps.xml", true);
+		http.send();
+}
+
 /* 
 pinagsasama yung value ng checked checkbox tapos nilalagay siya sa hidden input field na platforms at typeOfContents
 */
 function getSelectedCheckbox() {
-/* 
-pag chineck yung checkbox others, mashoshow yung hidden input field na otherContent, mag nauncheck mahahide 
-opacity ginamit kasi hindi nadedetect yung input field pag display none
-*/
+	/* 
+	pag chineck yung checkbox others, mashoshow yung hidden input field na otherContent, mag nauncheck mahahide 
+	opacity ginamit kasi hindi nadedetect yung input field pag display none
+	*/
 	document.getElementById("others").addEventListener("change", function () {
 		if (document.getElementById("otherContent").style.opacity == "0") {
 			document.getElementById("otherContent").style.opacity = "1";
@@ -392,8 +407,7 @@ opacity ginamit kasi hindi nadedetect yung input field pag display none
 			document.getElementById("otherContent").style.pointerEvents = "none";
 		}
 
-		if (document.getElementById("others").checked) {
-		} else {
+		if (document.getElementById("others").checked) {} else {
 			document.getElementById("otherContent").value = "";
 		}
 	});

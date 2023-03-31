@@ -193,7 +193,7 @@
 
 	<script>
 		window.addEventListener("load", function () {
-
+			
 			readStreamingApp();
 			getSelectedCheckbox();
 
@@ -207,6 +207,7 @@
 
 
 			document.getElementById("create").addEventListener("click", function () {
+				getAppNames();
 				document.getElementById("appName").readOnly = false;
 				resetFields();
 				showModal("Add");
