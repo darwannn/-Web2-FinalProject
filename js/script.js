@@ -67,17 +67,20 @@ function createEditStreamingApps() {
 irereset lang yung mga element sa default state (kamuka pag unang nag load yung website)
 */
 function resetFields() {
-	document.getElementById("message").value = "";
+	document.getElementById("message").innerHTML = "";
 	document.getElementById("appNameMessage").value = "";
 	document.getElementById("appName").value = "";
 	document.getElementById("basePlan").value = "";
 	document.getElementById("launchDate").value = "";
 	document.getElementById("platforms").value = "";
 	document.getElementById("typeOfContents").value = "";
+	document.getElementById("picture").value = "";
 	document.getElementById("otherContent").value = "";
 	document.getElementById("editPicture").value = "";
 	document.getElementById("pictureDisplay").src = "";
 	document.getElementById("otherContent").style.opacity = "0";
+	document.getElementById("appName").readOnly = false;
+	document.getElementById("appName").style.pointerEvents = "auto";
 /*
 dahil maraming checkbox sa index.php, gagamit ng  querySelectorAll para makuha lahat ng checkbox then
 mag iiterate isa-isa para ma uncheck sila
