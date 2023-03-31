@@ -30,7 +30,7 @@ foreach ($streamingApps as $streamingApp) {
 		if ($output == "") {
 			$output="
 			<div class='streamingApp'>
-			<img src='data:image;base64,".$picture."' height='200px' width='200px'>
+			<img src='data:image;base64,".$picture."' height='100%' width='100%'>
 				<div class='appName'>$appName</div>
 				<div class='basePlan'>PHP ".number_format($basePlan, 2, '.', ',')." / month</div>
 				<div class='launchDate'>$launchDate</div>";
@@ -63,7 +63,7 @@ foreach ($streamingApps as $streamingApp) {
         } else {
 			$output.="
 		<div class='streamingApp'>
-		<img src='data:image;base64,".$picture."' height='200px' width='200px'>
+		<img src='data:image;base64,".$picture."' height='100%' width='100%'>
 			<div class='appName'>$appName</div>
 			<div class='basePlan'>PHP ".number_format($basePlan, 2, '.', ',')." / month</div>
 			<div class='launchDate'>$launchDate</div>";

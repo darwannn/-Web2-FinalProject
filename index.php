@@ -60,7 +60,7 @@
 										<label class="picture">Picture: </label>
 										<span id="pictureMessage"></span>
 
-										<div class="form-group mt-2  mb-5" style="height: 300px;">
+										<div class="form-group mt-2  mb-5" style="height: 300px; ">
 											<div style="width: 100%; height:100%; border:1px solid black; position:relative"
 												id="image_container">
 												<input type="file" name="picture" id="picture"
@@ -139,13 +139,18 @@
 											style="opacity:0; pointer-events:none" autocomplete="off" readonly />
 
 									</div>
-
-
-									<div><input type="text" name="editPicture" id="editPicture" autocomplete="off"
-											readonly /></div>
-									<div><input type="text" name="platforms" id="platforms" autocomplete="off"
+									<!-- 
+										gamit lang to sa edit, dito malalagay yung CDATA picture ng ieedit na streaming apps
+									 -->
+									<div><input type="hidden" name="editPicture" id="editPicture" autocomplete="off"
+									readonly /></div>
+									
+									<!-- 
+										naka hide dito malalagay yung mga naka check na platforms at typeOfContents, converted to string at comma separated
+									 -->
+									<div><input type="hidden" name="platforms" id="platforms" autocomplete="off"
 											required /></div>
-									<div><input type="text" name="typeOfContents" id="typeOfContents" autocomplete="off"
+									<div><input type="hidden" name="typeOfContents" id="typeOfContents" autocomplete="off"
 											required /></div>
 									<br />
 								</div>
@@ -208,10 +213,15 @@
 				validate();
 			});
 
+
+				/* 
+				pagclinick yung button sa modal
+				*/
 			document.getElementById("modalButton").addEventListener("click", function (e) {
 				e.preventDefault();
 				document.getElementById("modalButton").disabled = true;
 				createEditStreamingApps();
+				
 			});
 
 			document.getElementById("modalClose").addEventListener("click", function () {

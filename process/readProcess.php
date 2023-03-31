@@ -19,7 +19,7 @@
 
 		$output="
 		<div class='streamingApp'>
-		<img src='data:image;base64,".$picture."' height='200px' width='200px'>
+		<img src='data:image;base64,".$picture."' height='100%' width='100%'>
 			<div class='appName'>$appName</div>
 			<div class='basePlan'>PHP ".number_format($basePlan, 2, '.', ',')." / month</div>
 			<div class='launchDate'>$launchDate</div>";
@@ -49,5 +49,6 @@
 			<button onclick='getToEditStreamingApp(`".$appName."`); document.getElementById(`modalButton`).disabled = false;'><i class='fa-solid fa-pen-to-square'></i></button>
 		</div>
 			";
+			
 			echo $output;
 	}

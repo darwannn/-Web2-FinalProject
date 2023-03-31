@@ -207,17 +207,22 @@ function getToEditStreamingApp(toGet) {
 								otherTypeOfContent.push(typeOfContent);
 							}
 						}
-						document.getElementById("typeOfContents").value = listedTypeOfContent.join(', ');
-
+						
 						/* 
 						ishoshow lang yung input field kung may nakalagay sa kanyang value
 						*/
 						if (otherTypeOfContent != "") {
 							document.getElementById("otherContent").style.opacity = "1";
-							document.getElementById("otherContent").value = otherTypeOfContent.join(', ');
+							document.getElementById("otherContent").value = otherTypeOfContent.join(', ') ;
 							document.getElementById("others").checked = true;
+							document.getElementById("otherContent").readOnly = false;
+							document.getElementById("otherContent").style.pointerEvents = "auto";
 						}
+						document.getElementById("typeOfContents").value = `${listedTypeOfContent.join(', ')}, ${document.getElementById("otherContent").value}`;
+
+
 						document.getElementById("appName").readOnly = true;
+						document.getElementById("appName").style.pointerEvents = "none";
 						showModal("Edit");
 						validate();
 						break;
@@ -261,23 +266,12 @@ function validate() {
 		document.getElementById("picture").addEventListener("blur", function () {
 			validateInput("picture", "pictureMessage", "picture");
 		});
-		document.getElementById("picture").addEventListener("change", function (e) {
-
-			document.getElementById("pictureDisplay").src = URL.createObjectURL(event.target.files[0]);
-			validateInput("picture", "pictureMessage", "picture");
-			/* document.getElementById("editPicture").value=""; */
-		});
 	}
-	/* 
-			document.getElementById("platforms").addEventListener("change", function () {
-				validateInput("platforms","platformsMessage","text");
-
-			});
-		
-			document.getElementById("typeOfContents").addEventListener("change", function () {
-				validateInput("typeOfContents","typeOfContentsMessage","text");
-
-			}); */
+		document.getElementById("picture").addEventListener("change", function (e) {
+			document.getElementById("pictureDisplay").src = URL.createObjectURL(e.target.files[0]);
+			validateInput("picture", "pictureMessage", "picture");
+		});
+	
 }
 
 /* 
@@ -463,12 +457,12 @@ function createToast(message, type) {
 	document.getElementById("toastList").appendChild(createToastListDialog);
 
 	let toastListDialog = document.querySelector(".toastList").getElementsByClassName("toastListDialog");
-	let toastList_close = document.createElement("div");
-	toastList_close.classList.add("toastList_close");
-	toastList_close.innerHTML = '<i class="fas fa-times"></i>';
-	createToastListDialog.appendChild(toastList_close);
+	let toastListClose = document.createElement("div");
+	toastListClose.classList.add("toastListClose");
+	toastListClose.innerHTML = '<i class="fas fa-times"></i>';
+	createToastListDialog.appendChild(toastListClose);
 
-	toastList_close.onclick = function (e) {
+	toastListClose.onclick = function (e) {
 		createToastListDialog.remove();
 
 	}
