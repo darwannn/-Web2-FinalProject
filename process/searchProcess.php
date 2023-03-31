@@ -40,7 +40,7 @@ foreach ($streamingApps as $streamingApp) {
 				<div class='platformsBadge'>
 				";
 				foreach ($platformsBadges as $platformsBadge) {
-					$output.="<div class='badge$platformsBadge'>$platformsBadge</div>";
+					$output.="<div class='platformsBadges badge$platformsBadge'>$platformsBadge</div>";
 				}
 				$output.="
 				</div>
@@ -50,14 +50,14 @@ foreach ($streamingApps as $streamingApp) {
 				<div class='typeOfContentsBadge'>
 				";
 				foreach ($typeOfContentsBadges as $typeOfContentsBadge) {
-					$output.="<div class='badge$typeOfContentsBadge'>$typeOfContentsBadge</div>";
+					$output.="<div class='typeOfContentsBadges badge$typeOfContentsBadge'>$typeOfContentsBadge</div>";
 				}
 				$output.="
 				</div>
 				";
 			/* <div class='typeOfContents'>$typeOfContents</div> */
-			$output.="<button onclick='deleteStreamingApp(`".$appName."`)'><i class='fa-solid fa-trash'></i></button>
-				<button onclick='getToEditStreamingApp(`".$appName."`); document.getElementById(`modalButton`).disabled = false;'><i class='fa-solid fa-pen-to-square'></i></button>
+			$output.="<button class='btn btn-secondary' onclick='deleteStreamingApp(`".$appName."`)'><i class='fa-solid fa-trash'></i></button>
+				<button class='btn btn-secondary' onclick='getToEditStreamingApp(`".$appName."`); document.getElementById(`modalButton`).disabled = false;'><i class='fa-solid fa-pen-to-square'></i></button>
 			</div>
 				";
         } else {
@@ -73,7 +73,7 @@ foreach ($streamingApps as $streamingApp) {
 			<div class='platformsBadge'>
 			";
 			foreach ($platformsBadges as $platformsBadge) {
-				$output.="<div class='badge$platformsBadge'>$platformsBadge</div>";
+				$output.="<div class='platformsBadges badge$platformsBadge'>$platformsBadge</div>";
 			}
 			$output.="
 			</div>
@@ -83,14 +83,14 @@ foreach ($streamingApps as $streamingApp) {
 			<div class='typeOfContentsBadge'>
 			";
 			foreach ($typeOfContentsBadges as $typeOfContentsBadge) {
-				$output.="<div class='badge$typeOfContentsBadge'>$typeOfContentsBadge</div>";
+				$output.="<div class='typeOfContentsBadges badge$typeOfContentsBadge'>$typeOfContentsBadge</div>";
 			}
 			$output.="
 			</div>
 			";
 		/* <div class='typeOfContents'>$typeOfContents</div> */
-		$output.="<button onclick='deleteStreamingApp(`".$appName."`)'><i class='fa-solid fa-trash'></i></button>
-			<button onclick='getToEditStreamingApp(`".$appName."`); document.getElementById(`modalButton`).disabled = false;'><i class='fa-solid fa-pen-to-square'></i></button>
+		$output.="<button class='btn btn-secondary' onclick='deleteStreamingApp(`".$appName."`)'><i class='fa-solid fa-trash'></i></button>
+			<button class='btn btn-secondary' onclick='getToEditStreamingApp(`".$appName."`); document.getElementById(`modalButton`).disabled = false;'><i class='fa-solid fa-pen-to-square'></i></button>
 		</div>
 			";
 		 }

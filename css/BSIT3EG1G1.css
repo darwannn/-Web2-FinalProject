@@ -182,7 +182,7 @@ a {
 	background-color: #006de1;
 } */
 
-form input[type="text"], form input[type="number"] {
+/* form input[type="text"], form input[type="number"] {
 	width: 15em;
 	padding: .6em;
 	border-radius: 3px;
@@ -202,22 +202,9 @@ form select {
 	border-radius: 3px;
 	border: 1px solid #ccc;
 }
-
+ */
 /* --------------- */
-.unread {
-	color: #000000!important;
-  /*   background-color: rgb(251,223,178); */
-	background-color: #FEF7EA;
-  }
-  
-  
-  .read {
-	color: #65676B!important;
-	background-color: #ffffff;
-  }
-  
-  
-  
+
   
   .toastList {
 	position: fixed;
@@ -234,7 +221,7 @@ form select {
 	z-index: 1000000000000!important;
   }
   
-  .toastList .toastListDialog {
+  .toastList .toastDialog {
 	position: relative;
 	padding: 30px 50px 30px 70px;
 	background: rgb(255, 255, 255);
@@ -246,7 +233,7 @@ form select {
 	margin: 5px 0px;
 	opacity: 0;
 	left: 20px;
-	animation: show_toastListDialog 500ms ease-in-out forwards;
+	animation: showToastDialog 500ms ease-in-out forwards;
 	pointer-events: fill !important;
 	word-wrap: break-word;
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -320,7 +307,7 @@ form select {
   
   
   
-  .toastListClose {
+  .toastClose {
   
 	color: #626262;
 	position: absolute;
@@ -331,7 +318,7 @@ form select {
 	font-size: 16px;
   }
   
-  @keyframes show_toastListDialog {
+  @keyframes showToastDialog {
 	to {
 	  opacity: 1;
 	  left: 0px;

@@ -77,7 +77,8 @@ function resetFields() {
 	document.getElementById("picture").value = "";
 	document.getElementById("otherContent").value = "";
 	document.getElementById("editPicture").value = "";
-	document.getElementById("pictureDisplay").src = "";
+	document.getElementById("pictureDisplay").src = "img/white.jpg";
+	document.getElementById("pictureText").style.opacity  = "1";
 	document.getElementById("otherContent").style.opacity = "0";
 	document.getElementById("appName").readOnly = false;
 	document.getElementById("appName").style.pointerEvents = "auto";
@@ -176,7 +177,7 @@ function getToEditStreamingApp(toGet) {
 						document.getElementById("launchDate").value = streamingApp.childNodes[5].childNodes[0].nodeValue;
 						document.getElementById("editPicture").value = streamingApp.childNodes[11].childNodes[0].nodeValue;
 						document.getElementById("pictureDisplay").src = `data:image;base64,${streamingApp.childNodes[11].childNodes[0].nodeValue}`
-
+						document.getElementById("pictureText").style.opacity  = "0";
 						var platforms = streamingApp.childNodes[7].childNodes[0].nodeValue;
 						var typeOfContents = streamingApp.childNodes[9].childNodes[0].nodeValue;
 
@@ -242,37 +243,38 @@ function getToEditStreamingApp(toGet) {
 
 function validate() {
 	document.getElementById("appName").addEventListener("keyup", function () {
-		validateInput("appName", "appNameMessage", "unique");
+		validateInput("appName", "appNameMessage", "This field is required", "unique");
 	});
 	document.getElementById("appName").addEventListener("blur", function () {
-		validateInput("appName", "appNameMessage", "unique");
+		validateInput("appName", "appNameMessage", "This field is required", "unique");
 	});
 
 	document.getElementById("basePlan").addEventListener("keyup", function () {
-		validateInput("basePlan", "basePlanMessage", "number");
+		validateInput("basePlan", "basePlanMessage", "This field is required", "number");
 
 	});
 	document.getElementById("basePlan").addEventListener("blur", function () {
-		validateInput("basePlan", "basePlanMessage", "number");
+		validateInput("basePlan", "basePlanMessage", "This field is required", "number");
 	});
 
 	document.getElementById("launchDate").addEventListener("change", function () {
-		validateInput("launchDate", "launchDateMessage", "text");
+		validateInput("launchDate", "launchDateMessage", "This field is required", "text");
 
 	});
 	document.getElementById("launchDate").addEventListener("blur", function () {
-		validateInput("launchDate", "launchDateMessage", "text");
+		validateInput("launchDate", "launchDateMessage", "This field is required", "text");
 	});
 
 	if (document.getElementById("editPicture").value.length == 0) {
 		console.log(document.getElementById("editPicture").value);
 		document.getElementById("picture").addEventListener("blur", function () {
-			validateInput("picture", "pictureMessage", "picture");
+			validateInput("picture", "pictureMessage", "This field is required", "picture");
 		});
 	}
 	document.getElementById("picture").addEventListener("change", function (e) {
 		document.getElementById("pictureDisplay").src = URL.createObjectURL(e.target.files[0]);
-		validateInput("picture", "pictureMessage", "picture");
+		document.getElementById("pictureText").style.opacity  = "0";
+		validateInput("picture", "pictureMessage", "This field is required", "picture");
 	});
 
 }
@@ -281,15 +283,16 @@ function validate() {
 	input = yung  id ng input
 	element = yung id ng paglalagyan ng message  
 	type = ginamit lang sa mga condition
+	message
 	 */
-function validateInput(input, element, type) {
+function validateInput(input, element, message, type) {
 
 	/* 
 	chineckeck lang kung walang laman yung mga input fields, pag wala mababago yung border ng input field
 	tapos may lalabas na error message
 	*/
 	if (document.getElementById(`${input}`).value.length == 0) {
-		document.getElementById(`${element}`).innerHTML = "This field is required";
+		document.getElementById(`${element}`).innerHTML = message;
 		document.getElementById(`${input}`).style.border = "red 1px solid";
 	} else {
 		/* 
@@ -324,7 +327,7 @@ function validateInput(input, element, type) {
 				document.getElementById(`${input}`).style.border = "red 1px solid";
 				document.getElementById(`${element}`).innerHTML = "Picture must only be .jpg, .jpeg, .png";
 				document.getElementById(`${input}`).value = "";
-				document.getElementById("pictureDisplay").value = "";
+				document.getElementById("pictureDisplay").value = "img/white.jpg";
 			} else {
 				/* 
 			chineckeck yung file size, pag sobra ng 5MB hindi mauupload
@@ -334,7 +337,8 @@ function validateInput(input, element, type) {
 					document.getElementById(`${input}`).style.border = "red 1px solid";
 					document.getElementById(`${element}`).innerHTML = "File is to big";
 					document.getElementById(`${input}`).value = "";
-					document.getElementById("pictureDisplay").src = "";
+					document.getElementById("pictureDisplay").src = "img/white.jpg";
+					document.getElementById("pictureText").style.opacity  = "1";
 				}
 			}
 		}
@@ -435,7 +439,7 @@ function getSelectedCheckbox() {
 			selectedPlatform.join(', ') gagawin niya lang string yung array namay seperator na ", [na may one whitespace]"
 			*/
 			document.getElementById("platforms").value = selectedPlatform.join(', ');
-			validateInput("platforms", "platformsMessage", "text");
+			validateInput("platforms", "platformsMessage", "This field is required", "text");
 
 		});
 	};
@@ -456,37 +460,37 @@ function getTypeOfContent() {
 		selectedTypeOfContent.push(checkedTypeOfContent.value)
 	}
 	document.getElementById("typeOfContents").value = selectedTypeOfContent.join(', ');
-	validateInput("typeOfContents", "typeOfContentsMessage", "checkbox");
+	validateInput("typeOfContents", "typeOfContentsMessage", "This field is required", "checkbox");
 }
 
 /* 
 nag gegenerate ng toast
 */
 function createToast(message, type) {
-	let createToastListDialog = document.createElement("div");
+	let createToastDialog = document.createElement("div");
 	/*
 	gumagawa ng random id para automatic na madelete yung toast depende sa delay na nakalagay sa setTimeout [1000 = 1second]
 	*/
 	let id = Math.random().toString(36).substr(2, 10);
-	createToastListDialog.setAttribute("id", id);
-	createToastListDialog.classList.add("toastListDialog", type);
-	createToastListDialog.innerText = message;
-	document.getElementById("toastList").appendChild(createToastListDialog);
+	createToastDialog.setAttribute("id", id);
+	createToastDialog.classList.add("toastDialog", type);
+	createToastDialog.innerText = message;
+	document.getElementById("toastList").appendChild(createToastDialog);
 
-	let toastListDialog = document.querySelector(".toastList").getElementsByClassName("toastListDialog");
-	let toastListClose = document.createElement("div");
-	toastListClose.classList.add("toastListClose");
-	toastListClose.innerHTML = '<i class="fas fa-times"></i>';
-	createToastListDialog.appendChild(toastListClose);
+	let toastDialog = document.querySelector(".toastList").getElementsByClassName("toastDialog");
+	let toastClose = document.createElement("div");
+	toastClose.classList.add("toastClose");
+	toastClose.innerHTML = '<i class="fas fa-times"></i>';
+	createToastDialog.appendChild(toastClose);
 
-	toastListClose.onclick = function (e) {
-		createToastListDialog.remove();
+	toastClose.onclick = function (e) {
+		createToastDialog.remove();
 
 	}
 	setTimeout(function () {
-		for (let i = 0; i < toastListDialog.length; i++) {
-			if (toastListDialog[i].getAttribute("id") == id) {
-				toastListDialog[i].remove();
+		for (let i = 0; i < toastDialog.length; i++) {
+			if (toastDialog[i].getAttribute("id") == id) {
+				toastDialog[i].remove();
 				break;
 			}
 		}
@@ -494,14 +498,11 @@ function createToast(message, type) {
 }
 
 function showModal(text) {
-	document.getElementById("modalBackdrop").style.display = "flex";
 	document.getElementById("modalButton").value = text;
-	document.getElementById("modal").style.display = "flex";
+	
 	myModal.show();
 }
 
 function closeModal() {
-	document.getElementById("modal").style.display = "none";
-	document.getElementById("modalBackdrop").style.display = "none";
 	resetFields();
 }

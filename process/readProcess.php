@@ -30,27 +30,27 @@ number_format para magkaron ng .00 yung number tapos lahat ng thousands mag karo
 nakahiwalay yung div para yung mga platforms nasa loob ng div na may class na platformsBadge
  */
 	$output .= "
-			<div class='platformsBadge'>
+			<div class='platformsBadge'>Platforms:
 			";
 	foreach ($platformsBadges as $platformsBadge) {
-		$output .= "<div class='badge$platformsBadge'>$platformsBadge</div>";
+		$output .= "<div class='platformsBadges badge$platformsBadge'>$platformsBadge</div>";
 	}
 	$output .= "
 			</div>
 			";
 
 	$output .= "
-			<div class='typeOfContentsBadge'>
+			<div class='typeOfContentsBadge'>Type of Contents:
 			";
 	foreach ($typeOfContentsBadges as $typeOfContentsBadge) {
-		$output .= "<div class='badge$typeOfContentsBadge'>$typeOfContentsBadge</div>";
+		$output .= "<div class='typeOfContentsBadges badge$typeOfContentsBadge'>$typeOfContentsBadge</div>";
 	}
 	$output .= "
 			</div>
 			";
 
-	$output .= "<button onclick='deleteStreamingApp(`" . $appName . "`)'><i class='fa-solid fa-trash'></i></button>
-			<button onclick='getToEditStreamingApp(`" . $appName . "`); document.getElementById(`modalButton`).disabled = false;'><i class='fa-solid fa-pen-to-square'></i></button>
+	$output .= "<button class='btn btn-secondary' onclick='deleteStreamingApp(`" . $appName . "`)'><i class='fa-solid fa-trash'></i></button>
+			<button class='btn btn-secondary' onclick='getToEditStreamingApp(`" . $appName . "`); document.getElementById(`modalButton`).disabled = false;'><i class='fa-solid fa-pen-to-square'></i></button>
 		</div>
 			";
 

@@ -12,31 +12,6 @@ $platforms = $_REQUEST["platforms"];
 $typeOfContents = $_REQUEST["typeOfContents"];
 $editPicture = $_REQUEST["editPicture"];
 $picture = $_FILES['picture']['tmp_name']; 
-
-/* $otherContent = $_REQUEST["otherContent"]; */
-/* if($typeOfContents != NULL && $otherContent != NULL) {
-	$typeOfContents .= ", ".$otherContent;
-} else if($typeOfContents == NULL && $otherContent != NULL) {
-	$typeOfContents = $otherContent;
-}  */
-
- /* if($appName == NULL || $basePlan == NULL || $launchDate == NULL || $platforms == NULL || $typeOfContents == NULL || $picture == NULL ) */
-/* if(false)
-{
-	echo  "All fields Required!";
-
-} else {
-	$allowed = array('png', 'jpg');
-	$filename = $_FILES['picture']['name'];
-	$ext = pathinfo($filename, PATHINFO_EXTENSION);
-	if (!in_array($ext, $allowed)) {
-		echo  "Invalid Image!";
-	} else {
-		//2mb
-		if($_FILES['picture']['size'] > 4000000) { 
-			echo  "Image Too Big!";
-		} else { */
-
 			
 $streamingApps = $xml->getElementsByTagName("streamingApp");
 
@@ -54,11 +29,11 @@ foreach ($streamingApps as $streamingApp) {
 		$newPlatforms = $xml->createElement("platforms", $platforms);
 		$newTypeOfContents = $xml->createElement("typeOfContents", $typeOfContents);
 
-		
+		/* 
+		chineckeck kung may laman yung picture (input type file) pag wala kukunin niya yung editPicture(yung dati niyang picture)
+		 */
 		$newPicture = $xml->createElement("picture"); 
 		if($picture != NULL ) {
-		
-		
 		$cdata = $xml->createCDATASection(base64_encode(file_get_contents($picture)));
 	} else {
 		$cdata = $xml->createCDATASection($editPicture);
@@ -74,7 +49,6 @@ foreach ($streamingApps as $streamingApp) {
 	
 		
 	$newNode->appendChild($newPicture);
-
 
 		$oldNode = $streamingApp;
 
