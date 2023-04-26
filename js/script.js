@@ -1,13 +1,66 @@
+window.addEventListener("load", function() {
+
+	//gets the From date
+/* 	$("#launchDate")
+		.datepicker({
+
+		}); */
+	readStreamingApp();
+	getSelectedCheckbox();
+
+	document.getElementById("search").addEventListener("keyup", function(e) {
+		searchStreamingApp(e.target.value);
+	});
+
+	document.getElementById("searchButton").addEventListener("click", function(e) {
+		searchStreamingApp(document.getElementById("search").value);
+	});
+
+
+	document.getElementById("create").addEventListener("click", function() {
+		getAppNames();
+		document.getElementById("appName").readOnly = false;
+		resetFields();
+		showModal("Add");
+		validate();
+	});
+
+
+	/* 
+	pagclinick yung button sa modal
+	*/
+	document.getElementById("modalButton").addEventListener("click", function(e) {
+		e.preventDefault();
+		document.getElementById("modalButton").disabled = true;
+		createEditStreamingApps();
+
+	});
+
+	/*
+	tuwing nagtatype sa input field na otherContent, malalagay yung value ng otherContent sa value ng checkbox others
+	yung getTypeOfContent na function yung nagaappend sa lahat ng value ng checkbox na nakacheck
+	*/
+	document.getElementById("otherContent").addEventListener("keyup", function(e) {
+		document.getElementById("others").value = document.getElementById("otherContent").value;
+		getTypeOfContent();
+	});
+
+});
+
+
+
 var myModal = new bootstrap.Modal(document.getElementById("streamingAppModal"));
 var appNames =[];
 /* 
 ididsplay lang yung streaming apps
 */
-function readStreamingApp() {
+ function readStreamingApp() {
 	http = new XMLHttpRequest();
 	http.onreadystatechange = function () {
 		if (http.readyState == 4 && http.status == 200) {
 			document.getElementById("streamingAppList").innerHTML = http.responseText;
+			
+
 		} else {
 			/* 
 			yung das fa-spinner fa-spin ay galing sa fontawesome, loading icon lang siya na may spin animation, 
@@ -18,6 +71,9 @@ function readStreamingApp() {
 	};
 	http.open("GET", `process/readProcess.php`, true);
 	http.send();
+
+
+	
 }
 
 /* 
@@ -121,6 +177,7 @@ function searchStreamingApp(toSearch) {
 		http.onreadystatechange = function () {
 			if (http.readyState == 4 && http.status == 200) {
 				document.getElementById("streamingAppList").innerHTML = http.responseText;
+				
 			} else {
 				document.getElementById("streamingAppList").innerHTML = "<i class='fas fa-spinner fa-spin'></i>";
 			}

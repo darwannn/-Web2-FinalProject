@@ -11,7 +11,17 @@
 	<link rel="stylesheet" href="css/BSIT3EG1G1.css">
 	<link rel="stylesheet" href="css/fontawesome.css">
 	<link rel="stylesheet" href="css/bootstrap.css">
-<!-- 
+	<link href="css/jquery-ui.css" rel="stylesheet">
+
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/jquery-ui.js"></script>
+
+
+
+
+
+
+	<!-- 
 nasa readProcess.php yung mga classname para malagyan ng design yung mga streamingApps
  -->
 	<style>
@@ -20,19 +30,19 @@ nasa readProcess.php yung mga classname para malagyan ng design yung mga streami
 		}
 
 		/* yung walang s yung container ng mga badge */
-		.platformsBadge, .typeOfContentsBadge  {
+		.platformsBadge,
+		.typeOfContentsBadge {
 			display: flex;
 
 		}
 
-		.platformsBadges, .typeOfContentsBadges {
-background-color: red;
-border-radius: 50px;
-padding: 10px;
-margin: 10px;
+		.platformsBadges,
+		.typeOfContentsBadges {
+			background-color: red;
+			border-radius: 50px;
+			padding: 10px;
+			margin: 10px;
 		}
-
-
 	</style>
 </head>
 
@@ -75,7 +85,7 @@ margin: 10px;
 
 							<div style="height: 300px; ">
 								<div style="width: 100%; height:100%; border:1px solid black; position:relative" id="image_container">
-									<input type="file" name="picture"  id="picture" accept=".png, .jpg, .jpeg" style="position:absolute; width:100%; height:100%; opacity:0;  z-index:100;" />
+									<input type="file" name="picture" id="picture" accept=".png, .jpg, .jpeg" style="position:absolute; width:100%; height:100%; opacity:0;  z-index:100;" />
 									<div id="pictureText" style="position:absolute; width:100%; height:100%;z-index:50; display: flex;
 									justify-content: center;
 									align-items: center; flex-direction:column;"><i class="fa-solid fa-image"></i>Upload a Picture</div>
@@ -176,15 +186,24 @@ margin: 10px;
 		</div>
 	</div>
 
+
 	<div class="btn btn-secondary" id="create">Add</div>
 
-		<div class="flex">
-			<input type="text" name="search" class="form-control" id="search" autocomplete="off" required />
-			<button class="btn btn-secondary" id="searchButton"><i class="fa fa-search"></i></button>
-			<label id="suggestion"></label>
-		</div>
-	
-	<div id="streamingAppList"></div>
+	<div class="flex">
+		<input type="text" name="search" class="form-control" id="search" placeholder="Search..." autocomplete="off" required />
+		<button class="btn btn-secondary" id="searchButton"><i class="fa fa-search"></i></button>
+		<label id="suggestion"></label>
+	</div>
+
+	<div id="streamingAppList">
+
+
+
+
+
+
+
+	</div>
 
 	<script src="js/lodash.js"></script>
 	<script src="js/bootstrap.js"></script>
@@ -192,51 +211,7 @@ margin: 10px;
 	<script src="js/script.js"></script>
 
 
-	<script>
-		window.addEventListener("load", function() {
 
-			readStreamingApp();
-			getSelectedCheckbox();
-
-			document.getElementById("search").addEventListener("keyup", function(e) {
-				searchStreamingApp(e.target.value);
-			});
-
-			document.getElementById("searchButton").addEventListener("click", function(e) {
-				searchStreamingApp(document.getElementById("search").value);
-			});
-
-
-			document.getElementById("create").addEventListener("click", function() {
-				getAppNames();
-				document.getElementById("appName").readOnly = false;
-				resetFields();
-				showModal("Add");
-				validate();
-			});
-
-
-			/* 
-			pagclinick yung button sa modal
-			*/
-			document.getElementById("modalButton").addEventListener("click", function(e) {
-				e.preventDefault();
-				document.getElementById("modalButton").disabled = true;
-				createEditStreamingApps();
-
-			});
-			
-			/*
-			tuwing nagtatype sa input field na otherContent, malalagay yung value ng otherContent sa value ng checkbox others
-			yung getTypeOfContent na function yung nagaappend sa lahat ng value ng checkbox na nakacheck
-			*/
-			document.getElementById("otherContent").addEventListener("keyup", function(e) {
-				document.getElementById("others").value = document.getElementById("otherContent").value;
-				getTypeOfContent();
-			});
-
-		});
-	</script>
 </body>
 
 </html>

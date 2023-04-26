@@ -20,9 +20,10 @@ foreach ($streamingApps as $streamingApp) {
 number_format para magkaron ng .00 yung number tapos lahat ng thousands mag karoon ng comma
 */
 	$output = "
-		<div class='streamingApp'>
-		<img src='data:image;base64," . $picture . "' height='100%' width='100%'>
-			<div class='appName'>$appName</div>
+	<div class='streamingApp'>
+	<img src='data:image;base64," . $picture . "' height='100%' width='100%'>
+			
+		<div class='appName'>$appName</div>
 			<div class='basePlan'>PHP " . number_format($basePlan, 2, '.', ',') . " / month</div>
 			<div class='launchDate'>$launchDate</div>";
 
