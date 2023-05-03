@@ -1,65 +1,72 @@
-window.addEventListener("load", function() {
+$(document).ready(function () {
 
-	//gets the From date
-/* 	$("#launchDate")
-		.datepicker({
-
-		}); */
+/* 	createToast("Dasd","error") */
 	readStreamingApp();
 	getSelectedCheckbox();
 
-	document.getElementById("search").addEventListener("keyup", function(e) {
-		searchStreamingApp(e.target.value);
+	$("#search").on("keyup", function (e) {
+		/* searchStreamingApp(e.target.value); */
+		suggestionStreamingApp(e.target.value);
 	});
 
-	document.getElementById("searchButton").addEventListener("click", function(e) {
-		searchStreamingApp(document.getElementById("search").value);
+	$("#searchButton").on("click", function (e) {
+		searchStreamingApp($("#search").val());
 	});
 
+	$("#clearButton").on("click", function (e) {
+		$("#suggestion").html("");
+		$("#search").val("");
+		readStreamingApp();
+	});
 
-	document.getElementById("create").addEventListener("click", function() {
+	$("#create").on("click", function () {
 		getAppNames();
-		document.getElementById("appName").readOnly = false;
+		$("#appName").prop("readOnly", false);
 		resetFields();
 		showModal("Add");
 		validate();
 	});
 
-
 	/* 
-	pagclinick yung button sa modal
+	pag-click ng button sa modal
 	*/
-	document.getElementById("modalButton").addEventListener("click", function(e) {
+	$("#modalButton").on("click", function (e) {
 		e.preventDefault();
-		document.getElementById("modalButton").disabled = true;
+		$("#modalButton").prop("disabled", true);
 		createEditStreamingApps();
-
 	});
 
 	/*
-	tuwing nagtatype sa input field na otherContent, malalagay yung value ng otherContent sa value ng checkbox others
+	tuwing nagta-type sa input field na otherContent, malalagay yung value ng otherContent sa value ng checkbox others
 	yung getTypeOfContent na function yung nagaappend sa lahat ng value ng checkbox na nakacheck
 	*/
-	document.getElementById("otherContent").addEventListener("keyup", function(e) {
-		document.getElementById("others").value = document.getElementById("otherContent").value;
+	$("#otherContent").on("keyup", function (e) {
+		$("#others").val($("#otherContent").val());
 		getTypeOfContent();
 	});
 
 });
 
 
-
 var myModal = new bootstrap.Modal(document.getElementById("streamingAppModal"));
-var appNames =[];
+var appNames = [];
 /* 
 ididsplay lang yung streaming apps
 */
- function readStreamingApp() {
+function readStreamingApp() {
+	$("#streamingAppList").accordion({
+		collapsible: true,
+		active: false
+	});
 	http = new XMLHttpRequest();
 	http.onreadystatechange = function () {
 		if (http.readyState == 4 && http.status == 200) {
 			document.getElementById("streamingAppList").innerHTML = http.responseText;
-			
+			$("#streamingAppList").accordion("destroy");
+			$("#streamingAppList").accordion({
+				collapsible: true,
+				active: false
+			});
 
 		} else {
 			/* 
@@ -73,7 +80,7 @@ ididsplay lang yung streaming apps
 	http.send();
 
 
-	
+
 }
 
 /* 
@@ -123,29 +130,34 @@ function createEditStreamingApps() {
 irereset lang yung mga element sa default state (kamuka pag unang nag load yung website)
 */
 function resetFields() {
-	document.getElementById("message").innerHTML = "";
-	document.getElementById("appNameMessage").value = "";
-	document.getElementById("appName").value = "";
-	document.getElementById("basePlan").value = "";
-	document.getElementById("launchDate").value = "";
-	document.getElementById("platforms").value = "";
-	document.getElementById("typeOfContents").value = "";
-	document.getElementById("picture").value = "";
-	document.getElementById("otherContent").value = "";
-	document.getElementById("editPicture").value = "";
-	document.getElementById("pictureDisplay").src = "img/white.jpg";
-	document.getElementById("pictureText").style.opacity  = "1";
-	document.getElementById("otherContent").style.opacity = "0";
-	document.getElementById("appName").readOnly = false;
-	document.getElementById("appName").style.pointerEvents = "auto";
-	/*
-	dahil maraming checkbox sa index.php, gagamit ng  querySelectorAll para makuha lahat ng checkbox then
-	mag iiterate isa-isa para ma uncheck sila
-	*/
-	var checkboxes = document.querySelectorAll("input[type=checkbox]");
-	for (var checkbox of checkboxes) {
-		checkbox.checked = false;
-	}
+	// Reset the values of all relevant form fields
+	$('#message').html('');
+	$('#appName').val('');
+	$('#basePlan').val('');
+	$('#launchDate').val('');
+	$('#platforms').val('');
+	$('#typeOfContents').val('');
+	$('#picture').val('');
+	$('#otherContent').val('');
+	$('#editPicture').val('');
+
+	$('#appNameMessage').html('');
+	$('#basePlanMessage').html('');
+	$('#launchDateMessage').html('');
+	$('#pictureMessage').html('');
+	$('#platformsMessage').html('');
+	$('#typeOfContentsMessage').html('');
+	$(`#appName, #basePlan, #launchDate, #platforms, #typeOfContents, #picture`).css("border", "black 1px solid");
+
+
+	$('#pictureDisplay').attr('src', 'img/white.jpg');
+	$('#pictureText').css('opacity', '1');
+	$('#otherContent').css('opacity', '0');
+	$('#appName').prop('readonly', false);
+	$('#appName').css('pointer-events', 'auto');
+
+	// Uncheck all checkboxes
+	$('input[type="checkbox"]').prop('checked', false);
 }
 
 function deleteStreamingApp(toDelete) {
@@ -171,13 +183,19 @@ function searchStreamingApp(toSearch) {
 		ang mananatiling naka show sa screen ay yung nagmatch lang na steaming app na tinype (hindi babalik sa dati) 
 		 */
 		document.getElementById("suggestion").innerHTML = "";
-		readStreamingApp();
+		/* readStreamingApp(); */
+		createToast("Please provide the name of a streaming app", "error")
 	} else {
 		http = new XMLHttpRequest();
 		http.onreadystatechange = function () {
 			if (http.readyState == 4 && http.status == 200) {
+				document.getElementById("suggestion").innerHTML = "";
 				document.getElementById("streamingAppList").innerHTML = http.responseText;
-				
+				$("#streamingAppList").accordion("destroy");
+				$("#streamingAppList").accordion({
+					collapsible: true,
+					active: false
+				});
 			} else {
 				document.getElementById("streamingAppList").innerHTML = "<i class='fas fa-spinner fa-spin'></i>";
 			}
@@ -234,7 +252,7 @@ function getToEditStreamingApp(toGet) {
 						document.getElementById("launchDate").value = streamingApp.childNodes[5].childNodes[0].nodeValue;
 						document.getElementById("editPicture").value = streamingApp.childNodes[11].childNodes[0].nodeValue;
 						document.getElementById("pictureDisplay").src = `data:image;base64,${streamingApp.childNodes[11].childNodes[0].nodeValue}`
-						document.getElementById("pictureText").style.opacity  = "0";
+						document.getElementById("pictureText").style.opacity = "0";
 						var platforms = streamingApp.childNodes[7].childNodes[0].nodeValue;
 						var typeOfContents = streamingApp.childNodes[9].childNodes[0].nodeValue;
 
@@ -299,41 +317,25 @@ function getToEditStreamingApp(toGet) {
 }
 
 function validate() {
-	document.getElementById("appName").addEventListener("keyup", function () {
-		validateInput("appName", "appNameMessage", "This field is required", "unique");
+	$('#appName').on('keyup blur', function () {
+		validateInput('appName', 'appNameMessage', 'This field is required', 'unique');
 	});
-	document.getElementById("appName").addEventListener("blur", function () {
-		validateInput("appName", "appNameMessage", "This field is required", "unique");
+	$('#basePlan').on('keyup blur', function () {
+		validateInput('basePlan', 'basePlanMessage', 'This field is required', 'number');
 	});
-
-	document.getElementById("basePlan").addEventListener("keyup", function () {
-		validateInput("basePlan", "basePlanMessage", "This field is required", "number");
-
+	$('#launchDate').on('change blur', function () {
+		validateInput('launchDate', 'launchDateMessage', 'This field is required', 'text');
 	});
-	document.getElementById("basePlan").addEventListener("blur", function () {
-		validateInput("basePlan", "basePlanMessage", "This field is required", "number");
-	});
-
-	document.getElementById("launchDate").addEventListener("change", function () {
-		validateInput("launchDate", "launchDateMessage", "This field is required", "text");
-
-	});
-	document.getElementById("launchDate").addEventListener("blur", function () {
-		validateInput("launchDate", "launchDateMessage", "This field is required", "text");
-	});
-
-	if (document.getElementById("editPicture").value.length == 0) {
-		console.log(document.getElementById("editPicture").value);
-		document.getElementById("picture").addEventListener("blur", function () {
-			validateInput("picture", "pictureMessage", "This field is required", "picture");
+	if ($('#editPicture').val().length == 0) {
+		$('#picture').on('blur', function () {
+			validateInput('picture', 'pictureMessage', 'This field is required', 'picture');
 		});
 	}
-	document.getElementById("picture").addEventListener("change", function (e) {
-		document.getElementById("pictureDisplay").src = URL.createObjectURL(e.target.files[0]);
-		document.getElementById("pictureText").style.opacity  = "0";
-		validateInput("picture", "pictureMessage", "This field is required", "picture");
+	$('#picture').on('change', function (e) {
+		$('#pictureDisplay').attr('src', URL.createObjectURL(e.target.files[0]));
+		$('#pictureText').css('opacity', '0');
+		validateInput('picture', 'pictureMessage', 'This field is required', 'picture');
 	});
-
 }
 
 /* 
@@ -348,54 +350,53 @@ function validateInput(input, element, message, type) {
 	chineckeck lang kung walang laman yung mga input fields, pag wala mababago yung border ng input field
 	tapos may lalabas na error message
 	*/
-	if (document.getElementById(`${input}`).value.length == 0) {
-		document.getElementById(`${element}`).innerHTML = message;
-		document.getElementById(`${input}`).style.border = "red 1px solid";
+	if ($(`#${input}`).val().length === 0) {
+		$(`#${element}`).html(message);
+		$(`#${input}`).css("border", "red 1px solid");
 	} else {
 		/* 
 		pag may laman, babalik sa dating kulay yung input fields
 		tapos mawawala yung error message
 		*/
-		document.getElementById(`${element}`).innerHTML = "";
-		document.getElementById(`${input}`).style.border = "black 1px solid";
+		$(`#${element}`).html("");
+		$(`#${input}`).css("border", "black 1px solid");
 
 		/* 
 		pag number yung type i vavalidate lang kung number talaga yung nakainput
 		pwede nato tanggalin kung gagawing type="number" yung field pero minsan kasi may nakakalusot na letter
 		*/
 
-		if (type == "number") {
-			if (isNaN(document.getElementById(`${input}`).value)) {
-				document.getElementById(`${input}`).style.border = "red 1px solid";
-				document.getElementById(`${element}`).innerHTML = "Must be a number";
+		if (type === "number") {
+			if (isNaN($(`#${input}`).val())) {
+				$(`#${input}`).css("border", "red 1px solid");
+				$(`#${element}`).html("Must be a number");
 			}
 		}
 
-
-		if (type == "picture") {
-			var picture = document.getElementById(`${input}`).value;
+		if (type === "picture") {
+			var picture = $(`#${input}`).val();
 			var dotIndex = picture.lastIndexOf(".") + 1;
-			var filyType = picture.substr(dotIndex, picture.length).toLowerCase();
+			var fileType = picture.substr(dotIndex, picture.length).toLowerCase();
 
 			/* 
 			chineckeck yung allowed file type, dapat JPG JPEG at PNG lang, hindi mauupload pag iba
 			 */
-			if (filyType != "jpg" && filyType != "jpeg" && filyType != "png") {
-				document.getElementById(`${input}`).style.border = "red 1px solid";
-				document.getElementById(`${element}`).innerHTML = "Picture must only be .jpg, .jpeg, .png";
-				document.getElementById(`${input}`).value = "";
-				document.getElementById("pictureDisplay").value = "img/white.jpg";
+			if (fileType !== "jpg" && fileType !== "jpeg" && fileType !== "png") {
+				$(`#${input}`).css("border", "red 1px solid");
+				$(`#${element}`).html("Picture must only be .jpg, .jpeg, .png");
+				$(`#${input}`).val("");
+				$("#pictureDisplay").attr("src", "img/white.jpg");
 			} else {
 				/* 
 			chineckeck yung file size, pag sobra ng 5MB hindi mauupload
 			 */
-				var fileSize = document.getElementById(`${input}`).files[0].size / 1024 / 1024;
+				var fileSize = $(`#${input}`)[0].files[0].size / 1024 / 1024;
 				if (fileSize > 5) {
-					document.getElementById(`${input}`).style.border = "red 1px solid";
-					document.getElementById(`${element}`).innerHTML = "File is to big";
-					document.getElementById(`${input}`).value = "";
-					document.getElementById("pictureDisplay").src = "img/white.jpg";
-					document.getElementById("pictureText").style.opacity  = "1";
+					$(`#${input}`).css("border", "red 1px solid");
+					$(`#${element}`).html("File is too big");
+					$(`#${input}`).val("");
+					$("#pictureDisplay").attr("src", "img/white.jpg");
+					$("#pictureText").css("opacity", "1");
 				}
 			}
 		}
@@ -406,12 +407,12 @@ function validateInput(input, element, message, type) {
 			then dito nagiiterate sa kada array kung nag match ba yung array sa tinype ng user.
 			mas better na approch yung nasa async await, Promise saka callback na try ko na ayaw parin gumana
 			 */
-		if (type == "unique") {
-			var inputAppName = document.getElementById(`${input}`).value;
+		if (type === "unique") {
+			var inputAppName = $(`#${input}`).val();
 			for (appName of appNames) {
-				if (appName.toLowerCase() == inputAppName.toLowerCase()) {
-					document.getElementById(`${input}`).style.border = "red 1px solid";
-					document.getElementById(`${element}`).innerHTML = `${appName} already exist.`;
+				if (appName.toLowerCase() === inputAppName.toLowerCase()) {
+					$(`#${input}`).css("border", "red 1px solid");
+					$(`#${element}`).html(`${appName} already exists.`);
 					break;
 				}
 			}
@@ -421,104 +422,98 @@ function validateInput(input, element, message, type) {
 	para to sa button chinecheck niya kung lahat ng requirements ay na meet, 
 	pag nameet na pwede nang iclick yung button, pag hindi pa naka disabled muna
 	*/
-	if (document.getElementById("appNameMessage").innerHTML.length != 0 || (document.getElementById("appName").value.length == 0) || (document.getElementById("basePlan").value.length == 0) ||
-		(document.getElementById("launchDate").value.length == 0) || (document.getElementById("platforms").value.length == 0) || (
-			(document.getElementById("typeOfContents").value.length == 0 && document.getElementById("otherContent").value.length == 0)) ||
-		(document.getElementById("picture").value.length == 0 && document.getElementById("editPicture").value.length == 0) || (isNaN(document.getElementById("basePlan").value))) {
-		document.getElementById("modalButton").disabled = true;
+	if ($("#appNameMessage").html().length !== 0 || $("#appName").val().length === 0 ||
+		$("#basePlan").val().length === 0 || $("#launchDate").val().length === 0 ||
+		$("#platforms").val().length === 0 || ($("#typeOfContents").val().length === 0 && $("#otherContent").val().length === 0) ||
+		($("#picture").val().length === 0 && $("#editPicture").val().length === 0) ||
+		isNaN($("#basePlan").val())) {
+		$("#modalButton").prop("disabled", true);
 	} else {
-		document.getElementById("modalButton").disabled = false;
+		$("#modalButton").prop("disabled", false);
 	}
 }
 
 
 function getAppNames() {
-		http = new XMLHttpRequest();
-		http.onreadystatechange = function () {
-			if (http.readyState == 4 && http.status == 200) {
-				xmlDocument = http.responseXML;
-				streamingApps = xmlDocument.getElementsByTagName("streamingApp");
-				for (streamingApp of streamingApps) {
-					var appName = streamingApp.childNodes[1].childNodes[0].nodeValue;
-					appNames.push(appName);
-				}
+	http = new XMLHttpRequest();
+	http.onreadystatechange = function () {
+		if (http.readyState == 4 && http.status == 200) {
+			xmlDocument = http.responseXML;
+			streamingApps = xmlDocument.getElementsByTagName("streamingApp");
+			for (streamingApp of streamingApps) {
+				var appName = streamingApp.childNodes[1].childNodes[0].nodeValue;
+				appNames.push(appName);
 			}
 		}
-		http.open("GET", "streamingApps.xml", true);
-		http.send();
+	}
+	http.open("GET", "streamingApps.xml", true);
+	http.send();
 }
 
 /* 
 pinagsasama yung value ng checked checkbox tapos nilalagay siya sa hidden input field na platforms at typeOfContents
 */
 function getSelectedCheckbox() {
-	/* 
-	pag chineck yung checkbox others, mashoshow yung hidden input field na otherContent, mag nauncheck mahahide 
-	opacity ginamit kasi hindi nadedetect yung input field pag display none
-	*/
-	document.getElementById("others").addEventListener("change", function () {
-		if (document.getElementById("otherContent").style.opacity == "0") {
-			document.getElementById("otherContent").style.opacity = "1";
-			document.getElementById("otherContent").readOnly = false;
-			document.getElementById("otherContent").style.pointerEvents = "auto";
 
+	// Check if the checkbox 'others' is checked or unchecked
+	// If checked, show the hidden input field 'otherContent' with opacity
+	// If unchecked, hide the input field 'otherContent'
+	$('#others').on('change', function () {
+		if ($('#otherContent').css('opacity') == 0) {
+			$('#otherContent').css({
+				'opacity': 1,
+				'pointer-events': 'auto'
+			}).prop('readonly', false);
 		} else {
-			document.getElementById("otherContent").style.opacity = "0";
-			document.getElementById("otherContent").readOnly = true;
-			document.getElementById("otherContent").style.pointerEvents = "none";
+			$('#otherContent').css({
+				'opacity': 0,
+				'pointer-events': 'none'
+			}).prop('readonly', true);
 		}
 
-		if (document.getElementById("others").checked) {} else {
-			document.getElementById("otherContent").value = "";
+		if (!$('#others').prop('checked')) {
+			$('#otherContent').val('');
 		}
 	});
 
-	/* 
-	querySelectorAll parang getElementByTagName, kinukuha niya lahat ng element na may class platform
-	platform.addEventListener, isa pang paraan sa paglalagay ng event sa isang element. ginamit siya sa code nato para
-	lahat ng element na may class platform ay malagyan ng CHANGE EVENT.
-	para pag chineck o uncheck yung mga platforms mageexecute yung code saloob nung event
-	*/
-	let platforms = document.querySelectorAll('.platform')
-	for (var platform of platforms) {
-		platform.addEventListener('change', function () {
-			/* 
-			kinukuha niya lahay ng element na may class platform na naka CHECK.
-			since nodelist/array yung nirereturn niya, mag iterate ka isa isa sa bawat item then pagsasamahin sila sa iisang 
-			array gamit yung .push (maaappend sa dulo)
-			 */
-			var checkedPlatforms = document.querySelectorAll('.platform:checked');
-			var selectedPlatform = [];
-			for (var checkedPlatform of checkedPlatforms) {
-				selectedPlatform.push(checkedPlatform.value)
-			}
-			/* 
-			selectedPlatform.join(', ') gagawin niya lang string yung array namay seperator na ", [na may one whitespace]"
-			*/
-			document.getElementById("platforms").value = selectedPlatform.join(', ');
-			validateInput("platforms", "platformsMessage", "This field is required", "text");
-
+	// Add change event to all elements with class 'platform'
+	// When checked or unchecked, execute the code inside the event
+	$('.platform').on('change', function () {
+		// Get all checked elements with class 'platform' and push them to an array
+		var selectedPlatform = [];
+		$('.platform:checked').each(function () {
+			selectedPlatform.push($(this).val());
 		});
-	};
 
-	let typeOfContents = document.querySelectorAll('.typeOfContent')
-	for (var typeOfContent of typeOfContents) {
-		typeOfContent.addEventListener('change', function () {
-			getTypeOfContent();
-		});
-	};
+		// Join the array with ', ' separator to create a string
+		$('#platforms').val(selectedPlatform.join(', '));
+
+		// Validate the input field 'platforms'
+		validateInput('platforms', 'platformsMessage', 'This field is required', 'text');
+	});
+
+	// Add change event to all elements with class 'typeOfContent'
+	// When changed, execute the function 'getTypeOfContent'
+	$('.typeOfContent').on('change', function () {
+		getTypeOfContent();
+	});
 }
 
 
 function getTypeOfContent() {
+	// Get all checked elements with class 'typeOfContent' and push their values to an array
 	var selectedTypeOfContent = [];
-	var checkedTypeOfContents = document.querySelectorAll('.typeOfContent:checked');
-	for (var checkedTypeOfContent of checkedTypeOfContents) {
-		selectedTypeOfContent.push(checkedTypeOfContent.value)
-	}
-	document.getElementById("typeOfContents").value = selectedTypeOfContent.join(', ');
-	validateInput("typeOfContents", "typeOfContentsMessage", "This field is required", "checkbox");
+	$('.typeOfContent:checked').each(function () {
+		selectedTypeOfContent.push($(this).val());
+	});
+
+	// Join the array with ', ' separator to create a string
+	$('#typeOfContents').val(selectedTypeOfContent.join(', '));
+
+	// Validate the input field 'typeOfContents'
+	validateInput('typeOfContents', 'typeOfContentsMessage', 'This field is required', 'checkbox');
 }
+
 
 /* 
 nag gegenerate ng toast
@@ -556,7 +551,7 @@ function createToast(message, type) {
 
 function showModal(text) {
 	document.getElementById("modalButton").value = text;
-	
+
 	myModal.show();
 }
 

@@ -12,12 +12,8 @@ foreach ($streamingApps as $streamingApp) {
 		$xml->getElementsByTagName("streamingApps")->item(0)->removeChild($streamingApp);
 		$xml->save("../streamingApps.xml");
 
-		echo "
-		Record Deleted!
-	
-		";
+		echo "Record Deleted";
 
 		break;
 	}
 }
-?>
