@@ -29,8 +29,8 @@ foreach ($streamingApps as $streamingApp) {
 
 		if ($output == "") {
 			$output = "
-			<img src='data:image;base64," . $picture . "' height='100px' width='100px'>
 			<div class='streamingApp'>
+			<img src='data:image;base64," . $picture . "' height='100px' width='100px'>
 				<div class='appName'>$appName</div>
 				<div class='basePlan'>PHP " . number_format($basePlan, 2, '.', ',') . " / month</div>
 				<div class='launchDate'>$launchDate</div>";
