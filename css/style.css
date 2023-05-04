@@ -22,7 +22,7 @@
 body {
   font-size: 1rem;
   line-height: 1.5;
-  background-color: #fff;
+  background-color: #FDEDDC;
 }
 
 header {
@@ -248,7 +248,7 @@ header .container {
   outline: none;
   font-size: 18px;
   padding: 0 20px;
-  background-color: transparent;
+
   font-weight: bold;
 }
 
@@ -283,4 +283,35 @@ header .container {
 
 .clearBtn {
   display: none;
+}
+
+.search-box {
+  position: relative;
+}
+
+#suggestion {
+  position: absolute;
+  z-index: 5;
+  background-color: white;
+  max-width: 700px;
+  width: 100%;
+  top: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  border-radius: 5px;
+  border: solid 2px black;
+}
+
+#suggestion .suggestion-result {
+  padding: 1em 1em;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  background-color: white !important;
+  border-bottom: solid 2px black;
+}
+
+#suggestion .suggestion-result:hover {
+  background-color: var(--accent-purple) !important;
+  color: var(--accent-text);
 }

@@ -11,12 +11,12 @@ $suggestion = "";
 
 foreach ($streamingApps as $streamingApp) {
 
-	$filterAppName = $streamingApp->getElementsByTagName("appName")->item(0)->nodeValue;
+    $filterAppName = $streamingApp->getElementsByTagName("appName")->item(0)->nodeValue;
     if (strtolower($search) == strtolower(substr($filterAppName, 0, strlen($search)))) {
         if ($suggestion == "") {
-            $suggestion = "<div onclick='searchStreamingApp(`".$filterAppName."`); document.getElementById(`search`).value=`$filterAppName`'>$filterAppName</div>";
+            $suggestion = "<div onclick='searchStreamingApp(`" . $filterAppName . "`); document.getElementById(`search`).value=`$filterAppName`' class='suggestion-result'>$filterAppName</div>";
         } else {
-            $suggestion .= "<br><div onclick='searchStreamingApp(`".$filterAppName."`); document.getElementById(`search`).value=`$filterAppName`'>$filterAppName</div>";
+            $suggestion .= "<div onclick='searchStreamingApp(`" . $filterAppName . "`); document.getElementById(`search`).value=`$filterAppName`' class='suggestion-result'>$filterAppName</div>";
         }
     }
 }

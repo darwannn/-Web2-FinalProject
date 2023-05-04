@@ -201,14 +201,17 @@ function searchStreamingApp(toSearch) {
 
 function suggestionStreamingApp(toSearch) {
   const clearBtn = document.getElementById("clearButton");
+  const suggestionBox = document.getElementById("suggestion");
   if (toSearch.length == 0) {
     document.getElementById("suggestion").innerHTML = "";
     readStreamingApp();
     // HIDE CLEAR BUTTON IF NO INPUT
     clearBtn.style.display = "none";
+    suggestionBox.style.display = "none";
   } else {
     // SHOW CLEAR BUTTON IF THERE IS INPUT
     clearBtn.style.display = "block";
+    suggestionBox.style.display = "block";
     http = new XMLHttpRequest();
     http.onreadystatechange = function () {
       if (http.readyState == 4 && http.status == 200) {

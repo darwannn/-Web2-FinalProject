@@ -351,14 +351,13 @@
 		</div>
 	</header>
 
-	<div class="container">
+	<div class="container search-box">
 		<div class="search-container">
 			<input type="text" name="search" class="form-control" id="search" placeholder="Search..." autocomplete="off" required />
 			<button class="searchBtn" id="searchButton"><i class="fa fa-search"></i></button>
 			<button class="clearBtn" id="clearButton"><i class="fa fa-close"></i></button>
-			<div id="suggestion"></div>
 		</div>
-
+		<div id="suggestion"></div>
 	</div>
 
 	<div class="container" id="streamingAppList">
