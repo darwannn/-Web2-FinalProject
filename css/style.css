@@ -28,7 +28,7 @@ body {
 header {
   background-color: var(--sky-blue);
   border-bottom: 3px solid black;
-  height: 170px;
+  height: 130px;
   display: flex;
   align-items: center;
   margin-bottom: 2rem;
