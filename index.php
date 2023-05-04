@@ -335,13 +335,7 @@
 
 	<!-- <div class="btn btn-secondary" id="create">Add</div>
 
-	<div class="">
-		<input type="text" name="search" class="form-control" id="search" placeholder="Search..." autocomplete="off" required />
-		<button class="btn btn-secondary" id="searchButton"><i class="fa fa-search"></i></button>
-		<button class="btn btn-secondary" id="clearButton"><i class="fa fa-close"></i></button>
-		<div id="suggestion"></div>
-
-	</div> -->
+	 -->
 
 
 
@@ -357,6 +351,16 @@
 		</div>
 	</header>
 
+	<div class="container">
+		<div class="search-container">
+			<input type="text" name="search" class="form-control" id="search" placeholder="Search..." autocomplete="off" required />
+			<button class="searchBtn" id="searchButton"><i class="fa fa-search"></i></button>
+			<button class="clearBtn" id="clearButton"><i class="fa fa-close"></i></button>
+			<div id="suggestion"></div>
+		</div>
+
+	</div>
+
 	<div class="container" id="streamingAppList">
 
 
@@ -371,6 +375,7 @@
 	<script src="js/bootstrap.js"></script>
 	<script src="js/fontawesome.js"></script>
 	<script src="js/script.js"></script>
+	<script src="js/style.js"></script>
 
 
 

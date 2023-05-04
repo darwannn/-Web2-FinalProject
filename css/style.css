@@ -31,6 +31,7 @@ header {
   height: 170px;
   display: flex;
   align-items: center;
+  margin-bottom: 2rem;
 }
 
 header .container {
@@ -223,4 +224,63 @@ header .container {
   background-color: var(--secondary-yellow);
   border: solid 2px black;
   box-shadow: 3px 3px 0px #000000;
+}
+
+
+
+.search-container {
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  max-width: 700px;
+  height: 50px;
+  overflow: hidden;
+  border-radius: 50px;
+  border: solid 2px black;
+  font-family: var(--content-font);
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
+}
+
+.search-container input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  padding: 0 20px;
+  background-color: transparent;
+  font-weight: bold;
+}
+
+.search-container button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0 20px;
+  color: var(--accent-text);
+  font-size: 20px;
+  background-color: var(--accent-purple);
+  border-radius: 0;
+  border-left: 2px black solid;
+  transition: all 0.2s ease-in-out;
+}
+
+.search-container button:nth-child(1) {
+  border-left: none;
+  border-radius: 50px 0 0 50px;
+}
+
+.search-container button:hover {
+  background-color: var(--accent-red);
+  color: var(--accent-text);
+}
+
+.search-active {
+  box-shadow: 3px 3px 0px #000000;
+  transform: translate(0px, -5px);
+}
+
+.clearBtn {
+  display: none;
 }
