@@ -55,6 +55,12 @@ function readStreamingApp() {
   // 	collapsible: true,
   // 	active: false
   // });
+  const suggestionBox = document.getElementById("suggestion");
+  const clearBtn = document.getElementById("clearButton");
+
+  clearBtn.style.display = "none";
+  suggestionBox.style.display = "none";
+
   http = new XMLHttpRequest();
   http.onreadystatechange = function () {
     if (http.readyState == 4 && http.status == 200) {
@@ -169,6 +175,7 @@ function deleteStreamingApp(toDelete) {
 }
 
 function searchStreamingApp(toSearch) {
+  const suggestionBox = document.getElementById("suggestion");
   if (toSearch.length == 0) {
     /* 
 		pag walang laman yung search input field i shoshow lang ulit lahat ng streamingApps, pag wala kasi nito
@@ -178,6 +185,7 @@ function searchStreamingApp(toSearch) {
     /* readStreamingApp(); */
     createToast("Please provide the name of a streaming app", "error");
   } else {
+    suggestionBox.style.display = "none";
     http = new XMLHttpRequest();
     http.onreadystatechange = function () {
       if (http.readyState == 4 && http.status == 200) {
