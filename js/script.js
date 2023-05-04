@@ -2,6 +2,7 @@ $(document).ready(function () {
   /* 	createToast("Dasd","error") */
   readStreamingApp();
   getSelectedCheckbox();
+  resetFields();
 
   $("#search").on("keyup", function (e) {
     /* searchStreamingApp(e.target.value); */
@@ -10,6 +11,10 @@ $(document).ready(function () {
 
   $("#searchButton").on("click", function (e) {
     searchStreamingApp($("#search").val());
+  });
+  $("#modalClose").on("click", function (e) {
+    appModalHide();
+    resetFields();
   });
 
   $("#clearButton").on("click", function (e) {
@@ -20,7 +25,7 @@ $(document).ready(function () {
 
   $("#create").on("click", function () {
     getAppNames();
-    $("#appName").prop("readOnly", false);
+    $("#appName").prop({readOnly: false});
     resetFields();
     showModal("Add");
     validate();
@@ -45,7 +50,7 @@ $(document).ready(function () {
   });
 });
 
-var myModal = new bootstrap.Modal(document.getElementById("streamingAppModal"));
+/* var appModal = new bootstrap.Modal(document.getElementById("streamingAppModal")); */
 var appNames = [];
 /* 
 ididsplay lang yung streaming apps
@@ -55,6 +60,12 @@ function readStreamingApp() {
   // 	collapsible: true,
   // 	active: false
   // });
+  const suggestionBox = document.getElementById("suggestion");
+  const clearBtn = document.getElementById("clearButton");
+
+  clearBtn.style.display = "none";
+  suggestionBox.style.display = "none";
+
   http = new XMLHttpRequest();
   http.onreadystatechange = function () {
     if (http.readyState == 4 && http.status == 200) {
@@ -64,13 +75,27 @@ function readStreamingApp() {
       //   collapsible: true,
       //   active: false,
       // });
+ 
+ /*      $( function() {
+        $( "#streamingAppList" ).selectable({
+          stop: function() {
+        
+            $( ".ui-selected", this ).each(function() {
+              var selectedAppName = $( "#streamingAppList .streamingAppWrapper .streamingApp .appName" ).html();
+              console.log(selectedAppName);
+            });
+          }
+        });
+      } ); */
+
+      $( "#streamingAppList" ).sortable();
     } else {
       /* 
 			yung das fa-spinner fa-spin ay galing sa fontawesome, loading icon lang siya na may spin animation, 
 			para habang wala pang response napapakita na nagloloading pa yung server
 			*/
       document.getElementById("streamingAppList").innerHTML =
-        "<i class='fas fa-spinner fa-spin'></i>";
+        "<i class='fas fa-spinner fa-spin fa-2xl' ></i>";
     }
   };
   http.open("GET", `process/readProcess.php`, true);
@@ -101,7 +126,8 @@ function createEditStreamingApps() {
       resetFields();
       /* tinawag to para automatic nang mashow yung data na kakacreate lang */
       readStreamingApp();
-      myModal.hide();
+
+      appModalHide();
     } else {
       document.getElementById("message").innerHTML = http.responseText;
     }
@@ -133,21 +159,22 @@ function resetFields() {
   $("#otherContent").val("");
   $("#editPicture").val("");
 
-  $("#appNameMessage").html("");
-  $("#basePlanMessage").html("");
-  $("#launchDateMessage").html("");
-  $("#pictureMessage").html("");
-  $("#platformsMessage").html("");
-  $("#typeOfContentsMessage").html("");
+  $("#appNameMessage").html("").fadeOut(300);
+  $("#basePlanMessage").html("").fadeOut(300);
+  $("#launchDateMessage").html("").fadeOut(300);
+  $("#pictureMessage").html("").fadeOut(300);
+  $("#platformsMessage").html("").fadeOut(300);
+  $("#typeOfContentsMessage").html("").fadeOut(300);
   $(
     `#appName, #basePlan, #launchDate, #platforms, #typeOfContents, #picture`
-  ).css("border", "black 1px solid");
+  ).animate({borderColor: "black"},300);
 
   $("#pictureDisplay").attr("src", "img/white.jpg");
   $("#pictureText").css("opacity", "1");
   $("#otherContent").css("opacity", "0");
-  $("#appName").prop("readonly", false);
-  $("#appName").css("pointer-events", "auto");
+  $("#appName").prop({readOnly: false});
+  $("#appName").css({pointerEvents: "auto"});
+  $(".modal").scrollTop(0);
 
   // Uncheck all checkboxes
   $('input[type="checkbox"]').prop("checked", false);
@@ -169,6 +196,7 @@ function deleteStreamingApp(toDelete) {
 }
 
 function searchStreamingApp(toSearch) {
+  const suggestionBox = document.getElementById("suggestion");
   if (toSearch.length == 0) {
     /* 
 		pag walang laman yung search input field i shoshow lang ulit lahat ng streamingApps, pag wala kasi nito
@@ -178,6 +206,7 @@ function searchStreamingApp(toSearch) {
     /* readStreamingApp(); */
     createToast("Please provide the name of a streaming app", "error");
   } else {
+    suggestionBox.style.display = "none";
     http = new XMLHttpRequest();
     http.onreadystatechange = function () {
       if (http.readyState == 4 && http.status == 200) {
@@ -200,17 +229,26 @@ function searchStreamingApp(toSearch) {
 }
 
 function suggestionStreamingApp(toSearch) {
+  const clearBtn = document.getElementById("clearButton");
+  const suggestionBox = document.getElementById("suggestion");
   if (toSearch.length == 0) {
     document.getElementById("suggestion").innerHTML = "";
     readStreamingApp();
+    
+    // HIDE CLEAR BUTTON IF NO INPUT
+    clearBtn.style.display = "none";
+    suggestionBox.style.display = "none";
   } else {
+    // SHOW CLEAR BUTTON IF THERE IS INPUT
+    clearBtn.style.display = "block";
+    suggestionBox.style.display = "block";
     http = new XMLHttpRequest();
     http.onreadystatechange = function () {
       if (http.readyState == 4 && http.status == 200) {
         document.getElementById("suggestion").innerHTML = http.responseText;
       } else {
         document.getElementById("suggestion").innerHTML =
-          "<i class='fas fa-spinner fa-spin'></i>";
+          "<i class='fas fa-spinner fa-spin' style ='top:15px; left:15px; position:relative'></i>";
       }
     };
     http.open("GET", "process/suggestionProcess.php?q=" + toSearch, true);
@@ -239,7 +277,7 @@ function getToEditStreamingApp(toGet) {
           var appName = streamingApp.childNodes[1].childNodes[0].nodeValue;
           if (appName.toLowerCase() == toGet.toLowerCase()) {
             resetFields();
-            myModal.show();
+            appModalShow();
 
             document.getElementById("appName").value = appName;
             document.getElementById("basePlan").value =
@@ -383,15 +421,18 @@ function validateInput(input, element, message, type) {
 	tapos may lalabas na error message
 	*/
   if ($(`#${input}`).val().length === 0) {
-    $(`#${element}`).html(message);
-    $(`#${input}`).css("border", "red 1px solid");
+  
+    $(`#${input}`).animate({borderColor: "red"},300);
+
+      $(`#${element}`).html(message).fadeIn(300);
+
   } else {
     /* 
 		pag may laman, babalik sa dating kulay yung input fields
 		tapos mawawala yung error message
 		*/
-    $(`#${element}`).html("");
-    $(`#${input}`).css("border", "black 1px solid");
+    $(`#${element}`).html("").fadeOut(300);
+    $(`#${input}`).animate({borderColor: "black"},300);
 
     /* 
 		pag number yung type i vavalidate lang kung number talaga yung nakainput
@@ -400,9 +441,12 @@ function validateInput(input, element, message, type) {
 
     if (type === "number") {
       if (isNaN($(`#${input}`).val())) {
-        $(`#${input}`).css("border", "red 1px solid");
-        $(`#${element}`).html("Must be a number");
-      }
+        $(`#${input}`).animate({borderColor: "red"},300);
+        $(`#${element}`).html("Must be a number").fadeIn(300);
+
+      } 
+    } else {
+      $(`#${element}`).html("").fadeOut(300);
     }
 
     if (type === "picture") {
@@ -414,21 +458,24 @@ function validateInput(input, element, message, type) {
 			chineckeck yung allowed file type, dapat JPG JPEG at PNG lang, hindi mauupload pag iba
 			 */
       if (fileType !== "jpg" && fileType !== "jpeg" && fileType !== "png") {
-        $(`#${input}`).css("border", "red 1px solid");
-        $(`#${element}`).html("Picture must only be .jpg, .jpeg, .png");
+        $(`#${input}`).animate({borderColor: "red"},300);
+        $(`#${element}`).html("Picture must only be .jpg, .jpeg, .png").fadeIn(300);;
         $(`#${input}`).val("");
         $("#pictureDisplay").attr("src", "img/white.jpg");
       } else {
         /* 
 			chineckeck yung file size, pag sobra ng 5MB hindi mauupload
 			 */
+      $(`#${element}`).html("").fadeOut(300);
         var fileSize = $(`#${input}`)[0].files[0].size / 1024 / 1024;
         if (fileSize > 5) {
-          $(`#${input}`).css("border", "red 1px solid");
-          $(`#${element}`).html("File is too big");
+          $(`#${input}`).animate({borderColor: "red"},300);
+          $(`#${element}`).html("File is too big").fadeIn(300);;
           $(`#${input}`).val("");
           $("#pictureDisplay").attr("src", "img/white.jpg");
           $("#pictureText").css("opacity", "1");
+        } else {
+            $(`#${element}`).html("").fadeOut(300);
         }
       }
     }
@@ -443,9 +490,13 @@ function validateInput(input, element, message, type) {
       var inputAppName = $(`#${input}`).val();
       for (appName of appNames) {
         if (appName.toLowerCase() === inputAppName.toLowerCase()) {
-          $(`#${input}`).css("border", "red 1px solid");
-          $(`#${element}`).html(`${appName} already exists.`);
+          $(`#${input}`).animate({borderColor: "red"},300);
+          $(`#${element}`).html(`${appName} already exists.`).fadeIn(300);;
           break;
+        } else {
+            $(`#${element}`).html("").fadeOut(300);
+
+      
         }
       }
     }
@@ -498,18 +549,20 @@ function getSelectedCheckbox() {
   $("#others").on("change", function () {
     if ($("#otherContent").css("opacity") == 0) {
       $("#otherContent")
-        .css({
+        .animate({
           opacity: 1,
-          "pointer-events": "auto",
+        }).css({
+          pointerEvents: "auto",
         })
-        .prop("readonly", false);
+        .prop({readOnly: false});
     } else {
       $("#otherContent")
-        .css({
+        .animate({
           opacity: 0,
-          "pointer-events": "none",
+        }).css({
+          pointerEvents: "none",
         })
-        .prop("readonly", true);
+        .prop({readOnly: true});
     }
 
     if (!$("#others").prop("checked")) {
@@ -570,7 +623,7 @@ nag gegenerate ng toast
 function createToast(message, type) {
   let createToastDialog = document.createElement("div");
   /*
-	gumagawa ng random id para automatic na madelete yung toast depende sa delay na nakalagay sa setTimeout [1000 = 1second]
+	gumagawa ng random id para automatic na madelete yung toast depende sa delay na nakalagay sa setTimeout [3000 = 1second]
 	*/
   let id = Math.random().toString(36).substr(2, 10);
   createToastDialog.setAttribute("id", id);
@@ -592,19 +645,67 @@ function createToast(message, type) {
   setTimeout(function () {
     for (let i = 0; i < toastDialog.length; i++) {
       if (toastDialog[i].getAttribute("id") == id) {
+        
         toastDialog[i].remove();
         break;
       }
     }
-  }, 10000);
+  }, 2000);
 }
 
 function showModal(text) {
   document.getElementById("modalButton").value = text;
 
-  myModal.show();
+  appModalShow();
 }
 
 function closeModal() {
   resetFields();
 }
+
+function appModalShow() {
+  $("#streamingAppModal").fadeIn(300);
+  $("#modalBackdrop").css("display", "flex");
+		$("body").css("overflow", "hidden");
+}
+function appModalHide() {
+  $("#streamingAppModal").fadeOut(300);
+  $("#modalBackdrop").css("display", "none");
+		$("body").css("overflow", "auto");
+}
+
+
+function openImage(image) {
+  console.log("Dsdas");
+  var zoomableImage = $("#zoomableImage");
+  zoomableImage.attr("src", image.src);
+  $("#modalBackdrop").css("display", "flex");
+  $("body").css("overflow", "hidden");
+  $(".imageModal").fadeIn(300).css({
+    display: "flex"
+  });
+}
+
+$("#zoomInImage").click(function() {
+  $("#zoomableImage").animate({
+    height: "+=200px",
+    width: "+=200px"
+  }, 300);
+});
+
+$("#zoomOutImage").click(function() {
+  $("#zoomableImage").animate({
+    height: "-=200px",
+    width: "-=200px"
+  }, 300);
+});
+
+$("#closeImage").on("click", function(e) {
+  $(".imageModal").fadeOut(300);
+  $("#modalBackdrop").css("display", "none");
+  $("body").css("overflow", "auto");
+  $("#zoomableImage").animate({
+    height: "500px",
+    width: "500px"
+  }, 300);
+});
