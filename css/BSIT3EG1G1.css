@@ -1,0 +1,206 @@
+* {
+	font-family: sans-serif;
+}
+
+title {
+	color: gold;
+	font-size: 40px;
+	font-weight: bolder;
+	text-align: center;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+.streamingApps {
+	width: 100%;
+}
+
+.streamingApp {
+	width: 50%;
+	border: solid 5px;
+	border-radius: 30px;
+	margin: 10px auto;
+	padding: 10px 50px;
+	display: block;
+}
+
+.streamingApp>* {
+	display: block;
+}
+
+.streamingApp:nth-child(odd) {
+	background-color: royalblue;
+	border-color: lightblue;
+}
+
+.streamingApp:nth-child(even) {
+	background-color: lightblue;
+	border-color: royalblue;
+}
+
+.streamingApp .appName {
+	color: white;
+	text-align: center;
+	font-style: italic;
+	font-size: 20px;
+}
+
+.basePlan,
+.launchDate,
+.platforms,
+.typeOfContents {
+	font-size: 20px;
+	padding: 10px 0;
+}
+
+.appName:before {
+	content: 'App Name: ';
+}
+
+.basePlan:before {
+	content: 'Base Plan: ';
+}
+
+.launchDate:before {
+	content: 'Launch Date: ';
+}
+
+.platforms:before {
+	content: 'Platforms: ';
+}
+
+.typeOfContents:before {
+	content: 'Type of Contents: ';
+}
+
+/* Other CSS */
+
+.wrapper {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 2em;
+	padding: 1em 0;
+}
+
+.flex {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1em;
+	padding: 1em 4em;
+	border: #ccc solid 1px;
+	border-radius: 5px;
+}
+
+.other-functions {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.other-functions a,
+.action-group a {
+	margin: 0 1.5em;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: rgb(112, 112, 112);
+	/* color: white; */
+	/* background-color: #007BFF; */
+	text-decoration: underline;
+	/* padding: .7em 1.2em; */
+	border-radius: 3px;
+	transition: ease-in 100ms;
+}
+
+.other-functions a:hover {
+	color: #006de1;
+}
+
+.action-group a:hover {
+	color: #2c2c2c;
+}
+
+.input-group {
+	display: flex;
+	flex-direction: column;
+	gap: .5em;
+}
+.checkbox {
+	display: flex;
+	flex-direction: column;
+	margin-top: .5em;
+}
+.checkboxTitle {
+	width: 100%;
+	margin-bottom: .5em;
+}
+.otherContent {
+	display: block;
+	width: 100%!important;
+}
+
+/* .checkbox {
+	max-width: 280px;
+} */
+
+
+.form-wrapper {
+	/* height: 100vh; */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 1em;
+}
+
+.form-wrapper form {
+	padding: 1.5em;
+	border: #ccc solid 1px;
+	border-radius: 5px;
+}
+
+/* form input[type="submit"] {
+	margin-right: .5em;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: white;
+	background-color: #007BFF;
+	padding: .7em 1.2em;
+	border-radius: 3px;
+	border: none;
+	cursor: pointer;
+	transition: ease-in 100ms;
+}
+ */
+/* form input[type="submit"]:hover {
+	background-color: #006de1;
+} */
+
+/* form input[type="text"], form input[type="number"] {
+	width: 15em;
+	padding: .6em;
+	border-radius: 3px;
+	border: 1px solid #ccc;
+}
+
+form input[type="date"] {
+	width: 15em;
+	padding: .6em;
+	border-radius: 3px;
+	border: 1px solid #ccc;
+}
+
+form select {
+	width: 15em;
+	padding: .6em;
+	border-radius: 3px;
+	border: 1px solid #ccc;
+}
+ */
+/* --------------- */
