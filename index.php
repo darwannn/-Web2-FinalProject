@@ -8,10 +8,13 @@
 
 	<title>Streaming Apps</title>
 
-	<link rel="stylesheet" href="css/BSIT3EG1G1.css">
+	<!-- <link rel="stylesheet" href="css/BSIT3EG1G1.css"> -->
 	<link rel="stylesheet" href="css/fontawesome.css">
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link href="css/jquery-ui.css" rel="stylesheet">
+
+
+
 
 	<script src="js/jquery-3.3.1.min.js"></script>
 	<script src="js/jquery-ui.js"></script>
@@ -22,17 +25,17 @@
 
 
 	<!-- 
-nasa readProcess.php yung mga classname para malagyan ng design yung mga streamingApps
- -->
+		nasa readProcess.php yung mga classname para malagyan ng design yung mga streamingApps
+	-->
 	<style>
 		#suggestion>div {
 			cursor: pointer;
 			background-color: #21A67A !important;
 		}
 
-		span {
+		/* span {
 			color: red;
-		}
+		} */
 
 		/* yung walang s yung container ng mga badge */
 		.platformsBadge,
@@ -184,6 +187,9 @@ nasa readProcess.php yung mga classname para malagyan ng design yung mga streami
 		}
 	</style>
 
+	<!-- New style for list -->
+	<link rel="stylesheet" href="css/style.css">
+
 </head>
 
 <body>
@@ -327,7 +333,7 @@ nasa readProcess.php yung mga classname para malagyan ng design yung mga streami
 	</div>
 
 
-	<div class="btn btn-secondary" id="create">Add</div>
+	<!-- <div class="btn btn-secondary" id="create">Add</div>
 
 	<div class="">
 		<input type="text" name="search" class="form-control" id="search" placeholder="Search..." autocomplete="off" required />
@@ -335,12 +341,23 @@ nasa readProcess.php yung mga classname para malagyan ng design yung mga streami
 		<button class="btn btn-secondary" id="clearButton"><i class="fa fa-close"></i></button>
 		<div id="suggestion"></div>
 
-	</div>
+	</div> -->
 
 
 
+	<header>
+		<div class="container">
+			<div class="title-wrapper">
+				<p class="h1">Streaming Apps for Legitimate Contents</p>
+			</div>
+			<div class="add-btn-wrapper">
+				<!-- add icon from font-awesome -->
+				<div id="create"> <i class="fa-solid fa-plus"></i> </div>
+			</div>
+		</div>
+	</header>
 
-	<div id="streamingAppList">
+	<div class="container" id="streamingAppList">
 
 
 

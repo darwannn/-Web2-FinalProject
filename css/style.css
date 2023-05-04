@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&family=Quicksand:wght@400;500;600;700&display=swap');
+
+:root {
+  --sky-blue: #69D2E7;
+  --primary-yellow: #FFDB58;
+  --secondary-yellow: #FDFD96;
+  --text-yellow: #E3A018;
+  --accent-purple: #C4A1FF;
+  --accent-text: #6842A9;
+  --accent-red: #FFA07A;
+
+  --header-font: 'Lexend', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: #fff;
+}
+
+header {
+  background-color: var(--sky-blue);
+  border-bottom: 3px solid black;
+  height: 170px;
+  display: flex;
+  align-items: center;
+}
+
+header .container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title-wrapper p {
+  font-family: var(--header-font);
+  font-weight: bold !important;
+}
+
+.add-btn-wrapper div {
+  height: 48px;
+  width: 48px;
+  background-color: var(--primary-yellow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24;
+  border: 2px solid black;
+  border-radius: 5px;
+  box-shadow: 3px 3px 0px #000000;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.add-btn-wrapper div:hover {
+  background-color: var(--secondary-yellow);
+}
