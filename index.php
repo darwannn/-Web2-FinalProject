@@ -7,7 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<title>Streaming Apps</title>
-
+	<!-- New style for list -->
+	<link rel="stylesheet" href="css/style.css">
 	<!-- <link rel="stylesheet" href="css/BSIT3EG1G1.css"> -->
 	<link rel="stylesheet" href="css/fontawesome.css">
 	<link rel="stylesheet" href="css/bootstrap.css">
@@ -187,8 +188,7 @@
 		}
 	</style>
 
-	<!-- New style for list -->
-	<link rel="stylesheet" href="css/style.css">
+
 
 </head>
 
@@ -201,7 +201,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="streamingAppModalLabel">Modal title</h5>
+					<h5 class="modal-title" id="streamingAppModalLabel">Add Content</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
@@ -211,26 +211,26 @@
 						<div>
 							<label class="form-label" for="appName">App Name:</label>
 							<input type="text" name="appName" class="form-control" id="appName" autocomplete="off" required />
-							<span id="appNameMessage"></span>
+							<span class="input-message" id="appNameMessage"></span>
 						</div>
 
 						<div>
 							<label class="form-label" for="basePlan">Base Plan:</label>
 							<input type="text" name="basePlan" class="form-control" id="basePlan" autocomplete="off" required />
-							<span id="basePlanMessage"></span>
+							<span class="input-message" id="basePlanMessage"></span>
 						</div>
 
 						<div>
 							<label class="form-label" for="launchDate">Launch Date:</label>
 							<input type="date" name="launchDate" class="form-control" id="launchDate" autocomplete="off" required />
-							<span id="launchDateMessage"></span>
+							<span class="input-message" id="launchDateMessage"></span>
 						</div>
 
 						<div>
 							<label class="form-label" class="picture">Picture: </label>
 
 							<div style="height: 300px; ">
-								<div style="width: 100%; height:100%; border:1px solid black; position:relative" id="image_container">
+								<div style="width: 100%; height:100%; border:2px solid black; border-radius: 5px; position:relative" id="image_container">
 									<input type="file" name="picture" id="picture" accept=".png, .jpg, .jpeg" style="position:absolute; width:100%; height:100%; opacity:0;  z-index:100;" />
 									<div id="pictureText" style="position:absolute; width:100%; height:100%;z-index:50; display: flex;
 									justify-content: center;
@@ -239,69 +239,103 @@
 								</div>
 							</div>
 
-							<span id="pictureMessage"></span>
+							<span class="input-message" id="pictureMessage"></span>
 						</div>
 
 
 						<div class="checkbox">
 
 							<label class="form-label" class="checkboxTitle">Platforms: </label>
-							<span id="platformsMessage"></span>
-							<div><input type="checkbox" class="platform" id="mobile" value="Mobile"><label for="mobile">Mobile</label></div>
-							<div><input type="checkbox" class="platform" id="smartTv" value="Smart TV"><label for="smartTv">Smart
-									TV</label></div>
-							<div><input type="checkbox" class="platform" id="web" value="Web"><label for="smartTv">Web
-								</label></div>
+							<span class="input-message" id="platformsMessage"></span>
+							<div class="platform-checkbox-container">
+								<div>
+									<input type="checkbox" class="platform" id="mobile" value="Mobile"><label for="mobile">Mobile
+									</label>
+								</div>
+								<div>
+									<input type="checkbox" class="platform" id="smartTv" value="Smart TV">
+									<label for="smartTv">Smart TV</label>
+								</div>
+								<div>
+									<input type="checkbox" class="platform" id="web" value="Web">
+									<label for="web">Web</label>
+								</div>
+							</div>
 
 						</div>
 
 						<div class="checkbox">
 
 							<label class="form-label" class="checkboxTitle">Type Of Contents: </label>
-							<span id="typeOfContentsMessage"></span>
-							<div><input type="checkbox" class="typeOfContent" id="asianShows" value="Asian Shows"><label for="asianShows">Asian Shows</label></div>
-							<div><input type="checkbox" class="typeOfContent" id="horror" value="Horror">
-								<label for="horror">Horror</label>
-							</div>
-							<div><input type="checkbox" class="typeOfContent" id="sports" value="Sports">
-								<label for="sports">Sports</label>
-							</div>
-							<div><input type="checkbox" class="typeOfContent" id="tvShows" value="TV Shows">
-								<label for="tvShows">TV
-									Shows</label>
-							</div>
-							<div><input type="checkbox" class="typeOfContent" id="varietyShows" value="Variety Shows">
-								<label for="varietyShows">Variety Shows</label>
-							</div>
-							<div><input type="checkbox" class="typeOfContent" id="indieFilms" value="Indie Films">
-								<label for="indieFilms">Indie Films</label>
-							</div>
-							<div><input type="checkbox" class="typeOfContent" id="koreanDramas" value="Korean Dramas">
-								<label for="koreanDramas">Korean Dramas</label>
-							</div>
-							<div><input type="checkbox" class="typeOfContent" id="eastAsianContent" value="East Asian Content">
-								<label for="eastAsianContent">East Asian Content</label>
-							</div>
-							<div><input type="checkbox" class="typeOfContent" id="familyFriendlyMovies" value="Family-friendly Movies"> <label for="familyFriendlyMovies">Family-friendly
-									Movies</label>
-							</div>
-							<div><input type="checkbox" class="typeOfContent" id="cartoons" value="Cartoons"> <label for="cartoons">Cartoons</label></div>
-							<div><input type="checkbox" class="typeOfContent" id="originalMovies" value="Original Movies"> <label for="originalMovies">Original
-									Movies</label></div>
-							<div><input type="checkbox" class="typeOfContent" id="warnerMediaMovies" value="Warner Media Movies">
-								<label for="warnerMediaMovies">Warner Media Movies</label>
-							</div>
-							<div><input type="checkbox" class="typeOfContent" id="adultContent" value="Adult Content">
-								<label for="adultContent">Adult Content</label>
-							</div>
+							<span class="input-message" id="typeOfContentsMessage"></span>
+							<div class="contents-checkbox-container">
+
+
+								<div>
+									<input type="checkbox" class="typeOfContent" id="asianShows" value="Asian Shows">
+									<label for="asianShows">Asian Shows</label>
+								</div>
+								<div>
+									<input type="checkbox" class="typeOfContent" id="horror" value="Horror">
+									<label for="horror">Horror</label>
+								</div>
+								<div>
+									<input type="checkbox" class="typeOfContent" id="sports" value="Sports">
+									<label for="sports">Sports</label>
+								</div>
+								<div>
+									<input type="checkbox" class="typeOfContent" id="tvShows" value="TV Shows">
+									<label for="tvShows">TV
+										Shows</label>
+								</div>
+								<div>
+									<input type="checkbox" class="typeOfContent" id="varietyShows" value="Variety Shows">
+									<label for="varietyShows">Variety Shows</label>
+								</div>
+								<div>
+									<input type="checkbox" class="typeOfContent" id="indieFilms" value="Indie Films">
+									<label for="indieFilms">Indie Films</label>
+								</div>
+								<div>
+									<input type="checkbox" class="typeOfContent" id="koreanDramas" value="Korean Dramas">
+									<label for="koreanDramas">Korean Dramas</label>
+								</div>
+								<!-- <div>
+									<input type="checkbox" class="typeOfContent" id="eastAsianContent" value="East Asian Content">
+									<label for="eastAsianContent">East Asian Content</label>
+								</div> -->
+								<div>
+									<input type="checkbox" class="typeOfContent" id="familyFriendlyMovies" value="Family-friendly Movies">
+									<label for="familyFriendlyMovies">Family-friendly
+										Movies
+									</label>
+								</div>
+								<div>
+									<input type="checkbox" class="typeOfContent" id="cartoons" value="Cartoons">
+									<label for="cartoons">Cartoons</label>
+								</div>
+								<div>
+									<input type="checkbox" class="typeOfContent" id="originalMovies" value="Original Movies">
+									<label for="originalMovies">Original
+										Movies</label>
+								</div>
+								<!-- <div>
+									<input type="checkbox" class="typeOfContent" id="warnerMediaMovies" value="Warner Media Movies">
+									<label for="warnerMediaMovies">Warner Media Movies</label>
+								</div> -->
+								<div>
+									<input type="checkbox" class="typeOfContent" id="adultContent" value="Adult Content">
+									<label for="adultContent">Adult Content</label>
+								</div>
 
 
 
-							<div><input type="checkbox" class="typeOfContent others" id="others" value="">
-								<label for="others">Others</label>
-							</div>
-							<input type="text" name="otherContent" class="form-control" id="otherContent" style="opacity:0; pointer-events:none" autocomplete="off" readonly />
+								<div><input type="checkbox" class="typeOfContent others" id="others" value="">
+									<label for="others">Others</label>
+								</div>
+								<input type="text" name="otherContent" class="form-control" id="otherContent" style="opacity:0; pointer-events:none" autocomplete="off" readonly />
 
+							</div>
 						</div>
 						<!-- 
 										gamit lang to sa edit, dito malalagay yung CDATA picture ng ieedit na streaming apps
@@ -325,8 +359,8 @@
 
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-secondary" value="modalButton" id="modalButton" disabled>
+					<button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+					<input type="submit" class="btn" value="modalButton" id="modalButton" disabled>
 				</div>
 			</div>
 		</div>

@@ -22,7 +22,7 @@
 body {
   font-size: 1rem;
   line-height: 1.5;
-  background-color: #FDEDDC;
+  background-color: #FDEDDC !important;
 }
 
 header {
@@ -331,4 +331,113 @@ header .container {
   text-align: center;
   padding: 1em 1em;
   transition: all 0.2s ease-in-out;
+}
+
+/* MODAL CSS */
+
+.modal-content {
+  border: solid 2px black !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  background-color: #f8d6b3 !important;
+  font-family: var(--content-font);
+  font-weight: bold;
+}
+
+.modal-header {
+  background-color: #FFA07A;
+  border-bottom: solid 2px black !important;
+}
+
+#modalForm .form-label {
+  color: #987653;
+}
+
+#modalForm input[type="text"],
+#modalForm input[type="date"] {
+  border: solid 2px black !important;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+#modalForm .input-message {
+  color: red;
+}
+
+.platform-checkbox-container {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-between; */
+  align-items: center;
+  justify-content: center;
+}
+
+.contents-checkbox-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.platform-checkbox-container div,
+.contents-checkbox-container div {
+  font-size: 18px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 10px;
+}
+
+#modalForm input[type="checkbox"] {
+  margin-right: 5px;
+  width: 20px;
+  height: 20px;
+}
+
+#modalForm input[type="checkbox"]:checked {
+  /* background-color: var(--accent-purple) !important; */
+  accent-color: var(--accent-purple) !important;
+}
+
+#modalForm input[type="checkbox"]:checked:hover {
+  accent-color: var(--accent-text) !important;
+}
+
+.modal-footer {
+  border-top: solid 2px black !important;
+}
+
+.modal-footer button,
+.modal-footer input[type="submit"] {
+  min-width: 70px;
+  border: solid 2px black;
+  font-weight: bold;
+}
+
+.modal-footer button {
+  background-color: #cc4634;
+  color: white;
+}
+
+.modal-footer button:hover {
+  background-color: #a63a2f;
+  color: white;
+}
+
+.modal-footer input[type="submit"] {
+  background-color: #6842A9;
+  color: white;
+  transition: all 0.2s ease-in-out;
+}
+
+.modal-footer input[type="submit"]:disabled {
+  background-color: #C4A1FF;
+  color: black;
+  border: transparent solid 2px
+}
+
+.modal-footer input[type="submit"]:enabled:hover {
+  background-color: #512d91;
+  color: white;
 }
