@@ -38,7 +38,7 @@
 		} */
 
 		/* yung walang s yung container ng mga badge */
-		.platformsBadge,
+		/* .platformsBadge,
 		.typeOfContentsBadge {
 			display: flex;
 
@@ -50,7 +50,7 @@
 			border-radius: 50px;
 			padding: 10px;
 			margin: 10px;
-		}
+		} */
 
 
 

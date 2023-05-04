@@ -10,6 +10,7 @@
   --accent-red: #FFA07A;
 
   --header-font: 'Lexend', sans-serif;
+  --content-font: 'Quicksand', sans-serif;
 }
 
 * {
@@ -61,4 +62,150 @@ header .container {
 
 .add-btn-wrapper div:hover {
   background-color: var(--secondary-yellow);
+}
+
+
+#streamingAppList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  gap: 1rem;
+}
+
+#streamingAppList .streamingApp {
+  max-width: 420px;
+  width: 100%;
+  height: 600px;
+  border: solid 1px;
+  background: var(--secondary-yellow);
+  border: 3px solid #000000;
+  box-shadow: 5px 5px 0px #000000;
+  border-radius: 5px;
+  padding: 25px 25px;
+  display: flex;
+  flex-direction: column;
+  /* cursor: pointer; */
+}
+
+.streamingApp .upper-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.upper-content .img-wrapper {
+  overflow: hidden;
+  max-height: 150px;
+  max-width: 150px;
+  border-radius: 15px;
+  border: 3px solid #000000;
+  /* box-shadow: 5px 5px 0px #000000; */
+}
+
+.upper-content .img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.upper-content .appName {
+  font-family: var(--header-font);
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.upper-content .typeOfContentsBadge {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 5px
+}
+
+.typeOfContentsBadge .typeOfContentsBadges {
+  font-size: 14px;
+  text-align: center;
+  background-color: var(--accent-purple);
+  padding: 5px 15px;
+  min-width: 120px;
+  border-radius: 20px;
+  font-family: var(--content-font);
+  font-weight: bold;
+}
+
+.streamingApp .main-content {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.main-content .content-label {
+  font-family: var(--content-font);
+  font-weight: bold;
+  font-size: 16px;
+  color: var(--text-yellow)
+}
+
+.main-content .content-val {
+  font-family: var(--content-font);
+  font-weight: bold;
+  font-size: 24px;
+  margin-top: 5px;
+}
+
+.main-content .platformsBadge {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 5px
+}
+
+.platformsBadge .platformsBadges {
+  font-style: var(--content-font);
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  background-color: var(--accent-red);
+  padding: 5px 15px;
+  min-width: 120px;
+  border: solid 2px;
+}
+
+.streamingApp .action-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  background-color: var(--primary-yellow);
+  border: solid 2px;
+  cursor: pointer;
+
+  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.action-wrapper:hover {
+  transform: translate(0px, -5px);
+  box-shadow: var(--secondary-yellow) 5px 5px 0px -2px, black 5px 5px;
+  ;
+}
+
+.action-wrapper button {
+  font-family: var(--content-font);
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 }
