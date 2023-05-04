@@ -75,7 +75,7 @@ header .container {
   gap: 1rem;
 }
 
-#streamingAppList .streamingApp {
+#streamingAppList .streamingAppWrapper {
   max-width: 420px;
   width: 100%;
   height: 600px;
@@ -84,10 +84,15 @@ header .container {
   border: 3px solid #000000;
   box-shadow: 5px 5px 0px #000000;
   border-radius: 5px;
-  padding: 25px 25px;
+  /* padding: 25px 25px; */
   display: flex;
   flex-direction: column;
   /* cursor: pointer; */
+}
+
+.streamingAppWrapper .streamingApp {
+  padding: 25px;
+  order: 2;
 }
 
 .streamingApp .upper-content {
@@ -181,24 +186,24 @@ header .container {
   border: solid 2px;
 }
 
-.streamingApp .action-wrapper {
+.streamingAppWrapper .action-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 5px;
   background-color: var(--primary-yellow);
-  border: solid 2px;
-  cursor: pointer;
-
-  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+  border-bottom: solid 3px;
+  overflow: hidden;
+  /* cursor: pointer; */
+  /* transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out; */
 }
 
-.action-wrapper:hover {
+/* .action-wrapper:hover {
   transform: translate(0px, -5px);
   box-shadow: var(--secondary-yellow) 5px 5px 0px -2px, black 5px 5px;
   ;
-}
+} */
 
 .action-wrapper button {
   font-family: var(--content-font);
@@ -206,6 +211,16 @@ header .container {
   font-size: 18px;
   border-radius: 5px;
   border: none;
+  padding: 5px 10px;
+  background-color: var(--primary-yellow);
+  color: #b39839;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+  border: solid 2px transparent;
+  transition: all 0.2s ease-in-out;
+}
+
+.action-wrapper button:hover {
+  background-color: var(--secondary-yellow);
+  border: solid 2px black;
+  box-shadow: 3px 3px 0px #000000;
 }

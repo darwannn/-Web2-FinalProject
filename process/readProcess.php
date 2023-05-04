@@ -20,6 +20,7 @@ foreach ($streamingApps as $streamingApp) {
 number_format para magkaron ng .00 yung number tapos lahat ng thousands mag karoon ng comma
 */
 	$output = "
+	<div class='streamingAppWrapper'>
 	<div class='streamingApp'>
 		<div class='upper-content'>
 		<div class = 'img-wrapper'><img src='data:image;base64," . $picture . "' height='100px' width='100px'></div>
@@ -54,13 +55,14 @@ nakahiwalay yung div para yung mga platforms nasa loob ng div na may class na pl
 		$output .= "<div class='platformsBadges badge$platformsBadge'>$platformsBadge</div>";
 	}
 	$output .= "
-			</div> </div>
+			</div> </div> </div>
 			";
 
 
 
-	$output .= "<div class='action-wrapper'><button class='btn btn-secondary' onclick='deleteStreamingApp(`" . $appName . "`)'><i class='fa-solid fa-trash'></i></button>
-			<button class='btn btn-secondary' onclick='getToEditStreamingApp(`" . $appName . "`); document.getElementById(`modalButton`).disabled = false;'><i class='fa-solid fa-pen-to-square'></i></button>
+	$output .= "<div class='action-wrapper'><button class='edit-btn' onclick='getToEditStreamingApp(`" . $appName . "`); document.getElementById(`modalButton`).disabled = false;'><i class='fa-solid fa-pen-to-square'></i></button>
+	<button class='delete-btn' onclick='deleteStreamingApp(`" . $appName . "`)'><i class='fa-solid fa-trash'></i></button>
+			
 		</div></div>
 			";
 
