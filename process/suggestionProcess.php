@@ -22,7 +22,9 @@ foreach ($streamingApps as $streamingApp) {
 }
 
 if ($suggestion == "") {
-    echo "No suggestion.";
+    echo "
+    <div class='no-suggestion-result'>No results found.</div>
+    ";
 } else {
 
     echo $suggestion;

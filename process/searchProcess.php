@@ -131,7 +131,7 @@ nakahiwalay yung div para yung mga platforms nasa loob ng div na may class na pl
 }
 
 if ($output == "") {
-	echo "No record found...";
+	echo "<div class='search-no-result'>No results found :< </div>";
 } else {
 	/* echo $suggestion; */
 	echo $output;

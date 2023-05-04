@@ -346,7 +346,7 @@
 			</div>
 			<div class="add-btn-wrapper">
 				<!-- add icon from font-awesome -->
-				<div id="create"> <i class="fa-solid fa-plus"></i> </div>
+				<div id="create"> <i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add Content</div>
 			</div>
 		</div>
 	</header>
