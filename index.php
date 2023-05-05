@@ -43,24 +43,6 @@
 			z-index: 1000000000000 !important;
 		}
 
-		.toastList .toastDialog {
-			position: relative;
-			padding: 30px 50px 30px 70px;
-			background: rgb(255, 255, 255);
-			color: #000000;
-			font-family: "Raleway";
-			font-size: 14px;
-			font-weight: 600;
-			border-radius: 5px;
-			margin: 5px 0px;
-			opacity: 0;
-			left: 20px;
-			animation: showToastDialog 500ms ease-in-out forwards;
-			pointer-events: fill !important;
-			word-wrap: break-word;
-			box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-		}
-
 		/* 
 		fill: %2321A67A
 		fill yung babaguhin para maiba kulay ng SVG 
