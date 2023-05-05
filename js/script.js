@@ -144,7 +144,7 @@ function readStreamingApp() {
   http.onreadystatechange = function () {
     if (http.readyState == 4 && http.status == 200) {
       document.getElementById("streamingAppList").innerHTML = http.responseText;
-      
+      $("#streamingAppList").sortable();
       /* JQUERY UI Selectable */
    /*    $(function() {
         $("#streamingAppList").selectable({
