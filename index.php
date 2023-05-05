@@ -7,110 +7,28 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<title>Streaming Apps</title>
-	<!-- New style for list -->
+
 	<link rel="stylesheet" href="css/style.css">
-	<!-- <link rel="stylesheet" href="css/BSIT3EG1G1.css"> -->
 	<link rel="stylesheet" href="css/fontawesome.css">
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link href="css/jquery-ui.css" rel="stylesheet">
 
-
-
-
 	<script src="js/jquery-3.3.1.min.js"></script>
 	<script src="js/jquery-ui.js"></script>
 
-
-
-
-
-
-	<!-- 
-		nasa readProcess.php yung mga classname para malagyan ng design yung mga streamingApps
-	-->
 	<style>
-		.imageModal {
-			z-index: 2000;
-			position: fixed;
-			width: 100%;
-			height: 100%;
-			top: 0;
-			left: 0;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			overflow: auto;
-		}
-
-		.imageControl {
-			width: 100%;
-			/* height: 50px; */
-			position: absolute;
-			top: 0;
-			/* 	right: 0; */
-			display: flex;
-			align-items: flex-end;
-			justify-content: flex-end;
-			background-color: rgba(0, 0, 0, 0.6);
-			padding-right: 20px;
-		}
-
-		.imageControl button {
-			width: 45px;
-			height: 50px;
-			/* background-color: rgba(0, 0, 0, 0.6); */
-			color: #999999;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			/* margin: 0 5px; */
-		}
-
-		.imageControl button:hover {
-
-			color: white;
-
-		}
-
-		#zoomableImage {
-			max-height: 1000px;
-			min-height: 500px;
-			height: 500px;
-			max-width: 1000px;
-			min-width: 500px;
-			width: 100px;
-		}
-
-		.imageModal {
+		/* #deleteAll {
 			display: none;
 		}
-
-		#suggestion>div {
-			cursor: pointer;
-			background-color: #21A67A !important;
+ */
+		/* para mapalitan yung value ng naka highlight */
+		.ui-selected {
+			background-color: #FFDB58 !important;
+			font-weight: bold;
 		}
 
-		/* span {
-			color: red;
-		} */
 
-		/* yung walang s yung container ng mga badge */
-		/* .platformsBadge,
-		.typeOfContentsBadge {
-			display: flex;
-
-		}
-
-		.platformsBadges,
-		.typeOfContentsBadges {
-			background-color: red;
-			border-radius: 50px;
-			padding: 10px;
-			margin: 10px;
-		} */
-
-
-
+		/* TOAST */
 		.toastList {
 			position: fixed;
 			top: -10px;
@@ -121,7 +39,6 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: flex-end;
-			/* background-color: aqua; */
 			pointer-events: none;
 			z-index: 1000000000000 !important;
 		}
@@ -144,6 +61,13 @@
 			box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 		}
 
+		/* 
+		fill: %2321A67A
+		fill yung babaguhin para maiba kulay ng SVG 
+		%23 = # 
+		%23+ HEX
+		fill: #21A67A
+		*/
 		.success::after {
 			content: url('data:image/svg+xml; utf8, <svg height="33" width="33" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill: %2321A67A" d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>');
 			position: absolute;
@@ -211,8 +135,6 @@
 			border-radius: 99px;
 		}
 
-
-
 		.toastClose {
 
 			color: #626262;
@@ -241,27 +163,6 @@
 				right: 50%;
 				transform: translate(50%, -50%);
 			}
-		}
-
-
-		.back-to-top {
-			z-index: 1;
-			border-radius: 10px;
-			position: fixed;
-			bottom: 25px;
-			right: 25px;
-			padding: 15px;
-			color: white;
-			background-color: rgb(23, 23, 23);
-
-			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-			transition: 0.5s ease-in-out;
-			visibility: hidden;
-		}
-
-		.back-to-top .fa-chevron-up {
-			font-size: 23px;
-			font-weight: 900;
 		}
 	</style>
 
@@ -458,6 +359,7 @@
 			<div class="add-btn-wrapper">
 				<!-- add icon from font-awesome -->
 				<div id="create"> <i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add Content</div>
+				<!-- 	<div id="deleteAll"><i class="fa-solid fa-trash me-2"></i>Delete All</div> -->
 			</div>
 		</div>
 	</header>

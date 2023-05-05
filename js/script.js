@@ -1,3 +1,5 @@
+var appNames = [];
+var selectedAppNames = [];
 $(document).ready(function () {
   /* 	createToast("Dasd","error") */
   readStreamingApp();
@@ -27,7 +29,7 @@ $(document).ready(function () {
     getAppNames();
     $("#appName").prop({readOnly: false});
     resetFields();
-    showModal("Add");
+    changeModalState("Add");
     validate();
   });
 
@@ -50,6 +52,55 @@ $(document).ready(function () {
   });
 
 
+ /*  $("#deleteAll").on("click", function () {
+    var appNames = selectedAppNames.join(" ")
+    deleteSelectedStreamingApp(appNames);
+  });
+ */
+  
+$("#zoomInImage").click(function() {
+  $("#zoomableImage").animate({
+    height: "+=200px",
+    width: "+=200px"
+  }, 300);
+});
+
+$("#zoomOutImage").click(function() {
+  $("#zoomableImage").animate({
+    height: "-=200px",
+    width: "-=200px"
+  }, 300);
+});
+
+$("#closeImage").on("click", function(e) {
+  zoomState = "zoom-out";
+  $(".imageModal").fadeOut(300);
+  $("#modalBackdrop").css("display", "none");
+  $("body").css("overflow", "auto");
+  $("#zoomableImage").animate({
+    height: "500px",
+    width: "500px"
+  }, 300);
+});
+
+/* zoomin at zoom out sa image ag nag doucle click */
+var zoomState = "zoom-out";
+$("#zoomableImage").on("dblclick", function(e) {
+  if(zoomState == "zoom-out") {
+    $("#zoomableImage").animate({
+      height: "1000px",
+      width: "1000px"
+    }, 300);
+    zoomState = "zoom-in";
+  } else if(zoomState == "zoom-in") {
+    $("#zoomableImage").animate({
+      height: "500px",
+      width: "500px"
+    }, 300);
+    zoomState = "zoom-out";
+  }
+});
+  
 /* back to top */
 $("#backToTop").click(function () {
   $("html, body").animate({scrollTop: 0}, 1000);
@@ -73,8 +124,7 @@ $("#backToTop").click(function () {
   
 });
 
-/* var appModal = new bootstrap.Modal(document.getElementById("streamingAppModal")); */
-var appNames = [];
+
 /* 
 ididsplay lang yung streaming apps
 */
@@ -94,47 +144,40 @@ function readStreamingApp() {
   http.onreadystatechange = function () {
     if (http.readyState == 4 && http.status == 200) {
       document.getElementById("streamingAppList").innerHTML = http.responseText;
-      // $("#streamingAppList").accordion("destroy");
-      // $("#streamingAppList").accordion({
-      //   collapsible: true,
-      //   active: false,
-      // });
- 
- /*      $( function() {
-        $( "#streamingAppList" ).selectable({
+      
+      /* JQUERY UI Selectable */
+   /*    $(function() {
+        $("#streamingAppList").selectable({
           stop: function() {
-        
-            $( ".ui-selected", this ).each(function() {
-              var selectedAppName = $( "#streamingAppList .streamingAppWrapper .streamingApp .appName" ).html();
-              console.log(selectedAppName);
+             selectedAppNames = [];
+            $(".ui-selected .appName").each(function() { 
+              selectedAppNames.push($(this).html()); 
             });
+            console.log(selectedAppNames); 
+            if (selectedAppNames.length > 1) {
+              $("#deleteAll").fadeIn(300); 
+            } else {
+              $("#deleteAll").fadeOut(300);
+            }
           }
         });
-      } ); */
-
-      $( "#streamingAppList" ).sortable();
-
-
+      });
+ */
+      /* Intersection Observer */
       var animation = document.querySelectorAll(".anim");
       var animationIntersection = new IntersectionObserver(function(i){
       i.forEach(function(j){
           if(j.intersectionRatio >0) {
              $(j.target).hide().fadeIn(600);
              animationIntersection.unobserve(j.target);
-      
           } else {
               j.target.style.animation = `none `; 
           }
-      
       });
       });
       animation.forEach (function(animations){
           animationIntersection.observe(animations);
       });
-
-
-
-
     } else {
       /* 
 			yung das fa-spinner fa-spin ay galing sa fontawesome, loading icon lang siya na may spin animation, 
@@ -241,6 +284,21 @@ function deleteStreamingApp(toDelete) {
   }
 }
 
+function deleteSelectedStreamingApp(toDelete) {
+  /* may lalabas lang na conficmation bago idelete yung selcted streaming apps */
+  if (confirm(`Do you really want to delete all the selected items?`)) {
+    http = new XMLHttpRequest();
+    http.onreadystatechange = function () {
+      if (http.readyState == 4 && http.status == 200) {
+        createToast(http.responseText, "success");
+        readStreamingApp();
+      }
+    };
+    http.open("GET", `process/deleteSelectedProcess.php?d=${toDelete}`, true);
+    http.send();
+  }
+}
+
 function searchStreamingApp(toSearch) {
   const suggestionBox = document.getElementById("suggestion");
   if (toSearch.length == 0) {
@@ -249,7 +307,6 @@ function searchStreamingApp(toSearch) {
 		ang mananatiling naka show sa screen ay yung nagmatch lang na steaming app na tinype (hindi babalik sa dati) 
 		 */
     document.getElementById("suggestion").innerHTML = "";
-    /* readStreamingApp(); */
     createToast("Please provide the name of a streaming app", "error");
   } else {
     $("#suggestion").slideUp(300);
@@ -259,11 +316,6 @@ function searchStreamingApp(toSearch) {
         document.getElementById("suggestion").innerHTML = "";
         document.getElementById("streamingAppList").innerHTML =
           http.responseText;
-        // $("#streamingAppList").accordion("destroy");
-        // $("#streamingAppList").accordion({
-        //   collapsible: true,
-        //   active: false,
-        // });
       } else {
         document.getElementById("streamingAppList").innerHTML =
           "<i class='fas fa-spinner fa-spin'></i>";
@@ -396,7 +448,7 @@ function getToEditStreamingApp(toGet) {
 
             document.getElementById("appName").readOnly = true;
             document.getElementById("appName").style.pointerEvents = "none";
-            showModal("Edit");
+            changeModalState("Edit");
             validate();
             break;
           } else {
@@ -664,6 +716,18 @@ function getTypeOfContent() {
   );
 }
 
+/* Zoomable Image */
+function openImage(image) {
+  console.log("Dsdas");
+  var zoomableImage = $("#zoomableImage");
+  zoomableImage.attr("src", image.src);
+  $("#modalBackdrop").css("display", "flex");
+  $("body").css("overflow", "hidden");
+  $(".imageModal").fadeIn(300).css({
+    display: "flex"
+  });
+}
+
 /* 
 nag gegenerate ng toast
 */
@@ -699,9 +763,8 @@ function createToast(message, type) {
   }, 5000);
 }
 
-function showModal(text) {
+function changeModalState(text) {
   document.getElementById("modalButton").value = text;
-
   appModalShow();
 }
 
@@ -714,65 +777,10 @@ function appModalShow() {
   $("#modalBackdrop").css("display", "flex");
 		$("body").css("overflow", "hidden");
 }
+
 function appModalHide() {
   $("#streamingAppModal").slideUp(300);
   $("#modalBackdrop").css("display", "none");
 		$("body").css("overflow", "auto");
 }
-
-
-function openImage(image) {
-  console.log("Dsdas");
-  var zoomableImage = $("#zoomableImage");
-  zoomableImage.attr("src", image.src);
-  $("#modalBackdrop").css("display", "flex");
-  $("body").css("overflow", "hidden");
-  $(".imageModal").fadeIn(300).css({
-    display: "flex"
-  });
-}
-
-$("#zoomInImage").click(function() {
-  $("#zoomableImage").animate({
-    height: "+=200px",
-    width: "+=200px"
-  }, 300);
-});
-
-$("#zoomOutImage").click(function() {
-  $("#zoomableImage").animate({
-    height: "-=200px",
-    width: "-=200px"
-  }, 300);
-});
-
-var zoomState = "zoom-out";
-$("#zoomableImage").on("dblclick", function(e) {
-  if(zoomState == "zoom-out") {
-    $("#zoomableImage").animate({
-      height: "1000px",
-      width: "1000px"
-    }, 300);
-    zoomState = "zoom-in";
-  } else if(zoomState == "zoom-in") {
-    $("#zoomableImage").animate({
-      height: "500px",
-      width: "500px"
-    }, 300);
-    zoomState = "zoom-out";
-  }
-});
-
-
-$("#closeImage").on("click", function(e) {
-  zoomState = "zoom-out";
-  $(".imageModal").fadeOut(300);
-  $("#modalBackdrop").css("display", "none");
-  $("body").css("overflow", "auto");
-  $("#zoomableImage").animate({
-    height: "500px",
-    width: "500px"
-  }, 300);
-});
-
 
