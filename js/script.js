@@ -18,9 +18,9 @@ $(document).ready(function () {
   });
 
   $("#clearButton").on("click", function (e) {
-    $("#suggestion").html("");
     $("#search").val("");
     readStreamingApp();
+    $("#suggestion").html("");
   });
 
   $("#create").on("click", function () {
@@ -48,6 +48,29 @@ $(document).ready(function () {
     $("#others").val($("#otherContent").val());
     getTypeOfContent();
   });
+
+
+/* back to top */
+$("#backToTop").click(function () {
+  $("html, body").animate({scrollTop: 0}, 1000);
+});
+
+  $(window).scroll(function() {
+    var scroll = $(this).scrollTop();
+    if (scroll < 300) {
+      $("#backToTop").css({
+        visibility: "hidden",
+        opacity: "0"
+      });
+    } else {
+      $("#backToTop").css({
+        visibility: "visible",
+        opacity: "1"
+      });
+    }
+  });
+ 
+  
 });
 
 /* var appModal = new bootstrap.Modal(document.getElementById("streamingAppModal")); */
@@ -64,7 +87,8 @@ function readStreamingApp() {
   const clearBtn = document.getElementById("clearButton");
 
   clearBtn.style.display = "none";
-  suggestionBox.style.display = "none";
+  $("#suggestion").slideUp(300);
+  
 
   http = new XMLHttpRequest();
   http.onreadystatechange = function () {
@@ -89,6 +113,28 @@ function readStreamingApp() {
       } ); */
 
       $( "#streamingAppList" ).sortable();
+
+
+      var animation = document.querySelectorAll(".anim");
+      var animationIntersection = new IntersectionObserver(function(i){
+      i.forEach(function(j){
+          if(j.intersectionRatio >0) {
+             $(j.target).hide().fadeIn(600);
+             animationIntersection.unobserve(j.target);
+      
+          } else {
+              j.target.style.animation = `none `; 
+          }
+      
+      });
+      });
+      animation.forEach (function(animations){
+          animationIntersection.observe(animations);
+      });
+
+
+
+
     } else {
       /* 
 			yung das fa-spinner fa-spin ay galing sa fontawesome, loading icon lang siya na may spin animation, 
@@ -206,7 +252,7 @@ function searchStreamingApp(toSearch) {
     /* readStreamingApp(); */
     createToast("Please provide the name of a streaming app", "error");
   } else {
-    suggestionBox.style.display = "none";
+    $("#suggestion").slideUp(300);
     http = new XMLHttpRequest();
     http.onreadystatechange = function () {
       if (http.readyState == 4 && http.status == 200) {
@@ -232,20 +278,21 @@ function suggestionStreamingApp(toSearch) {
   const clearBtn = document.getElementById("clearButton");
   const suggestionBox = document.getElementById("suggestion");
   if (toSearch.length == 0) {
+    $("#suggestion").slideUp(300);
     document.getElementById("suggestion").innerHTML = "";
     readStreamingApp();
     
     // HIDE CLEAR BUTTON IF NO INPUT
-    clearBtn.style.display = "none";
-    suggestionBox.style.display = "none";
+/*     clearBtn.style.display = "none"; */
   } else {
     // SHOW CLEAR BUTTON IF THERE IS INPUT
     clearBtn.style.display = "block";
-    suggestionBox.style.display = "block";
-    http = new XMLHttpRequest();
-    http.onreadystatechange = function () {
-      if (http.readyState == 4 && http.status == 200) {
-        document.getElementById("suggestion").innerHTML = http.responseText;
+/*     suggestionBox.style.display = "block"; */
+http = new XMLHttpRequest();
+http.onreadystatechange = function () {
+  if (http.readyState == 4 && http.status == 200) {
+    document.getElementById("suggestion").innerHTML = http.responseText;
+    $("#suggestion").slideDown(300);
       } else {
         document.getElementById("suggestion").innerHTML =
           "<i class='fas fa-spinner fa-spin' style ='top:15px; left:15px; position:relative'></i>";
@@ -431,7 +478,7 @@ function validateInput(input, element, message, type) {
 		pag may laman, babalik sa dating kulay yung input fields
 		tapos mawawala yung error message
 		*/
-    $(`#${element}`).html("").fadeOut(300);
+    $(`#${element}`).fadeOut(300).html("");
     $(`#${input}`).animate({borderColor: "black"},300);
 
     /* 
@@ -446,7 +493,7 @@ function validateInput(input, element, message, type) {
 
       } 
     } else {
-      $(`#${element}`).html("").fadeOut(300);
+      $(`#${element}`).fadeOut(300).html("");
     }
 
     if (type === "picture") {
@@ -466,7 +513,7 @@ function validateInput(input, element, message, type) {
         /* 
 			chineckeck yung file size, pag sobra ng 5MB hindi mauupload
 			 */
-      $(`#${element}`).html("").fadeOut(300);
+      $(`#${element}`).fadeOut(300).html("");
         var fileSize = $(`#${input}`)[0].files[0].size / 1024 / 1024;
         if (fileSize > 5) {
           $(`#${input}`).animate({borderColor: "red"},300);
@@ -475,7 +522,7 @@ function validateInput(input, element, message, type) {
           $("#pictureDisplay").attr("src", "img/white.jpg");
           $("#pictureText").css("opacity", "1");
         } else {
-            $(`#${element}`).html("").fadeOut(300);
+            $(`#${element}`).fadeOut(300).html("");
         }
       }
     }
@@ -494,7 +541,7 @@ function validateInput(input, element, message, type) {
           $(`#${element}`).html(`${appName} already exists.`).fadeIn(300);;
           break;
         } else {
-            $(`#${element}`).html("").fadeOut(300);
+            $(`#${element}`).fadeOut(300).html("");
 
       
         }
@@ -621,20 +668,17 @@ function getTypeOfContent() {
 nag gegenerate ng toast
 */
 function createToast(message, type) {
-  let createToastDialog = document.createElement("div");
-  /*
-	gumagawa ng random id para automatic na madelete yung toast depende sa delay na nakalagay sa setTimeout [3000 = 1second]
-	*/
-  let id = Math.random().toString(36).substr(2, 10);
+  var createToastDialog = document.createElement("div");
+  var id = Math.random().toString(36).substr(2, 10);
   createToastDialog.setAttribute("id", id);
   createToastDialog.classList.add("toastDialog", type);
   createToastDialog.innerText = message;
   document.getElementById("toastList").appendChild(createToastDialog);
 
-  let toastDialog = document
+  var toastDialog = document
     .querySelector(".toastList")
     .getElementsByClassName("toastDialog");
-  let toastClose = document.createElement("div");
+    var toastClose = document.createElement("div");
   toastClose.classList.add("toastClose");
   toastClose.innerHTML = '<i class="fas fa-times"></i>';
   createToastDialog.appendChild(toastClose);
@@ -642,15 +686,17 @@ function createToast(message, type) {
   toastClose.onclick = function (e) {
     createToastDialog.remove();
   };
+
   setTimeout(function () {
-    for (let i = 0; i < toastDialog.length; i++) {
+    for (var i = 0; i < toastDialog.length; i++) {
       if (toastDialog[i].getAttribute("id") == id) {
-        
-        toastDialog[i].remove();
+        $(`#${id}`).hide("slide", { direction: "left" }, 300, function () {
+           $(toastDialog[i]).remove();
+         });
         break;
       }
     }
-  }, 2000);
+  }, 5000);
 }
 
 function showModal(text) {
@@ -664,12 +710,12 @@ function closeModal() {
 }
 
 function appModalShow() {
-  $("#streamingAppModal").fadeIn(300);
+  $("#streamingAppModal").slideDown(300);
   $("#modalBackdrop").css("display", "flex");
 		$("body").css("overflow", "hidden");
 }
 function appModalHide() {
-  $("#streamingAppModal").fadeOut(300);
+  $("#streamingAppModal").slideUp(300);
   $("#modalBackdrop").css("display", "none");
 		$("body").css("overflow", "auto");
 }
@@ -700,7 +746,26 @@ $("#zoomOutImage").click(function() {
   }, 300);
 });
 
+var zoomState = "zoom-out";
+$("#zoomableImage").on("dblclick", function(e) {
+  if(zoomState == "zoom-out") {
+    $("#zoomableImage").animate({
+      height: "1000px",
+      width: "1000px"
+    }, 300);
+    zoomState = "zoom-in";
+  } else if(zoomState == "zoom-in") {
+    $("#zoomableImage").animate({
+      height: "500px",
+      width: "500px"
+    }, 300);
+    zoomState = "zoom-out";
+  }
+});
+
+
 $("#closeImage").on("click", function(e) {
+  zoomState = "zoom-out";
   $(".imageModal").fadeOut(300);
   $("#modalBackdrop").css("display", "none");
   $("body").css("overflow", "auto");
@@ -709,3 +774,5 @@ $("#closeImage").on("click", function(e) {
     width: "500px"
   }, 300);
 });
+
+

@@ -20,6 +20,7 @@ foreach ($streamingApps as $streamingApp) {
 		$appName = $streamingApp->getElementsByTagName("appName")->item(0)->nodeValue;
 		$basePlan = $streamingApp->getElementsByTagName("basePlan")->item(0)->nodeValue;
 		$launchDate = $streamingApp->getElementsByTagName("launchDate")->item(0)->nodeValue;
+		$launchDate = date("F j, Y", strtotime($launchDate));
 		$platforms = $streamingApp->getElementsByTagName("platforms")->item(0)->nodeValue;
 		$typeOfContents = $streamingApp->getElementsByTagName("typeOfContents")->item(0)->nodeValue;
 		$picture = $streamingApp->getElementsByTagName("picture")->item(0)->nodeValue;

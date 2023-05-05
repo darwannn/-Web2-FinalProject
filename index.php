@@ -31,7 +31,7 @@
 	<style>
 		.imageModal {
 			z-index: 2000;
-			position: absolute;
+			position: fixed;
 			width: 100%;
 			height: 100%;
 			top: 0;
@@ -44,9 +44,32 @@
 
 		.imageControl {
 			width: 100%;
-			height: 50px;
+			/* height: 50px; */
 			position: absolute;
 			top: 0;
+			/* 	right: 0; */
+			display: flex;
+			align-items: flex-end;
+			justify-content: flex-end;
+			background-color: rgba(0, 0, 0, 0.6);
+			padding-right: 20px;
+		}
+
+		.imageControl button {
+			width: 45px;
+			height: 50px;
+			/* background-color: rgba(0, 0, 0, 0.6); */
+			color: #999999;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			/* margin: 0 5px; */
+		}
+
+		.imageControl button:hover {
+
+			color: white;
+
 		}
 
 		#zoomableImage {
@@ -219,6 +242,27 @@
 				transform: translate(50%, -50%);
 			}
 		}
+
+
+		.back-to-top {
+			z-index: 1;
+			border-radius: 10px;
+			position: fixed;
+			bottom: 25px;
+			right: 25px;
+			padding: 15px;
+			color: white;
+			background-color: rgb(23, 23, 23);
+
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+			transition: 0.5s ease-in-out;
+			visibility: hidden;
+		}
+
+		.back-to-top .fa-chevron-up {
+			font-size: 23px;
+			font-weight: 900;
+		}
 	</style>
 
 
@@ -267,8 +311,8 @@
 									<input type="file" name="picture" id="picture" accept=".png, .jpg, .jpeg" style="position:absolute; width:100%; height:100%; opacity:0;  z-index:100;" />
 									<div id="pictureText" style="position:absolute; width:100%; height:100%;z-index:50; display: flex;
 									justify-content: center;
-									align-items: center; flex-direction:column;"><i class="fa-solid fa-image"></i>Upload a Picture</div>
-									<img id="pictureDisplay" src="img/white.jpg" style="position:absolute; width:100%; height:100%; object-fit:contain; z-index:10;">
+									align-items: center; flex-direction:column;"><i class="fa-solid fa-image fa-2xl"></i>Upload a Picture</div>
+									<img id="pictureDisplay" src="img/white.jpg" style="position:absolute; width:100%; height:100%; object-fit:cover; z-index:10;">
 								</div>
 							</div>
 
@@ -438,11 +482,13 @@
 	<div class="imageModal">
 		<img id="zoomableImage">
 		<div class="imageControl">
-			<button class="closeImage" id="closeImage"><i class="fa fa-close"></i></button>
-			<button class="zoomInImage" id="zoomInImage"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
-			<button class="zoomIOutImage" id="zoomOutImage"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+			<button class="btn zoomInImage shadow-none" id="zoomInImage"><i class="fa-solid fa-magnifying-glass-plus "></i></button>
+			<button class="btn zoomIOutImage shadow-none" id="zoomOutImage"><i class="fa-solid fa-magnifying-glass-minus "></i></button>
+			<button class="btn closeImage shadow-none" id="closeImage"><i class="fa fa-close fa-lg"></i></button>
 		</div>
 	</div>
+	<button id="backToTop" class=" back-to-top ui-widget-content" role="button"><i class="fa fa-chevron-up"></i></button>
+
 	<br><br><br>
 
 	<script src="js/lodash.js"></script>
