@@ -137,6 +137,7 @@ function readStreamingApp() {
   const clearBtn = document.getElementById("clearButton");
 
   clearBtn.style.display = "none";
+
   $("#suggestion").slideUp(300);
   
 

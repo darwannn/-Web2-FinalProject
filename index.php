@@ -13,9 +13,12 @@
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link href="css/jquery-ui.css" rel="stylesheet">
 
+
+
+
 	<script src="js/jquery-3.3.1.min.js"></script>
 	<script src="js/jquery-ui.js"></script>
-
+  
 	<style>
 		/* #deleteAll {
 			display: none;
@@ -26,7 +29,6 @@
 			background-color: #FFDB58 !important;
 			font-weight: bold;
 		}
-
 
 		/* TOAST */
 		.toastList {
@@ -163,6 +165,7 @@
 				<div class="modal-header">
 					<h5 class="modal-title" id="streamingAppModalLabel">Add Content</h5>
 					<!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+
 				</div>
 				<div class="modal-body">
 					<form id="modalForm" method="post" enctype="multipart/form-data">
@@ -204,7 +207,6 @@
 
 
 						<div class="checkbox">
-
 							<label class="form-label" class="checkboxTitle" style="margin-bottom:0px;">Platforms: </label>
 							<br><span class=" input-message" id="platformsMessage"><br></span>
 							<div class="platform-checkbox-container">
@@ -225,11 +227,65 @@
 						</div>
 
 						<div class="checkbox">
-
 							<label class="form-label" class="checkboxTitle" style="margin-bottom:0px;">Type Of Contents: </label>
 							<br><span class="input-message" id="typeOfContentsMessage"></span>
 							<div class="contents-checkbox-container">
-
+								<div>
+									<input type="checkbox" class="typeOfContent" id="asianShows" value="Asian Shows">
+									<label for="asianShows">Asian Shows</label>
+								</div>
+								<div>
+									<input type="checkbox" class="typeOfContent" id="horror" value="Horror">
+									<label for="horror">Horror</label>
+								</div>
+								<div>
+									<input type="checkbox" class="typeOfContent" id="sports" value="Sports">
+									<label for="sports">Sports</label>
+								</div>
+								<div>
+									<input type="checkbox" class="typeOfContent" id="tvShows" value="TV Shows">
+									<label for="tvShows">TV
+										Shows</label>
+								</div>
+								<div>
+									<input type="checkbox" class="typeOfContent" id="varietyShows" value="Variety Shows">
+									<label for="varietyShows">Variety Shows</label>
+								</div>
+								<div>
+									<input type="checkbox" class="typeOfContent" id="indieFilms" value="Indie Films">
+									<label for="indieFilms">Indie Films</label>
+								</div>
+								<div>
+									<input type="checkbox" class="typeOfContent" id="koreanDramas" value="Korean Dramas">
+									<label for="koreanDramas">Korean Dramas</label>
+								</div>
+								<!-- <div>
+									<input type="checkbox" class="typeOfContent" id="eastAsianContent" value="East Asian Content">
+									<label for="eastAsianContent">East Asian Content</label>
+								</div> -->
+								<div>
+									<input type="checkbox" class="typeOfContent" id="familyFriendlyMovies" value="Family-friendly Movies">
+									<label for="familyFriendlyMovies">Family-friendly
+										Movies
+									</label>
+								</div>
+								<div>
+									<input type="checkbox" class="typeOfContent" id="cartoons" value="Cartoons">
+									<label for="cartoons">Cartoons</label>
+								</div>
+								<div>
+									<input type="checkbox" class="typeOfContent" id="originalMovies" value="Original Movies">
+									<label for="originalMovies">Original
+										Movies</label>
+								</div>
+								<!-- <div>
+									<input type="checkbox" class="typeOfContent" id="warnerMediaMovies" value="Warner Media Movies">
+									<label for="warnerMediaMovies">Warner Media Movies</label>
+								</div> -->
+								<div>
+									<input type="checkbox" class="typeOfContent" id="adultContent" value="Adult Content">
+									<label for="adultContent">Adult Content</label>
+								</div>
 
 								<div>
 									<input type="checkbox" class="typeOfContent" id="asianShows" value="Asian Shows">
@@ -294,7 +350,6 @@
 									<label for="others">Others</label>
 								</div>
 								<input type="text" name="otherContent" class="form-control" id="otherContent" style="opacity:0;" autocomplete="off" />
-
 							</div>
 						</div>
 						<!-- 
@@ -327,10 +382,7 @@
 	</div>
 
 
-	<!-- <div class="btn btn-secondary" id="create">Add</div>
-
-	 -->
-
+	<!-- <div class="btn btn-secondary" id="create">Add</div> -->
 
 
 	<header>
@@ -341,11 +393,9 @@
 			<div class="add-btn-wrapper">
 				<!-- add icon from font-awesome -->
 				<div id="create"> <i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add Content</div>
-				<!-- 	<div id="deleteAll"><i class="fa-solid fa-trash me-2"></i>Delete All</div> -->
 			</div>
 		</div>
 	</header>
-
 	<div class="container search-box">
 		<div class="search-container">
 			<input type="text" name="search" class="form-control" id="search" placeholder="Search..." autocomplete="off" required />
@@ -356,6 +406,7 @@
 	</div>
 
 	<div class="container" id="streamingAppList">
+
 
 
 
