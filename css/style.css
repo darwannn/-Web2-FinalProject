@@ -84,13 +84,25 @@ header .container {
   height: 600px;
   border: solid 1px;
   background: var(--secondary-yellow);
-  border: 3px solid #000000;
-  box-shadow: 5px 5px 0px #000000;
+  border: 2px solid #000000;
+  box-shadow: 1px 1px 0px black,
+    2px 2px 0px black;
   border-radius: 5px;
   /* padding: 25px 25px; */
   display: flex;
   flex-direction: column;
   /* cursor: pointer; */
+  /* transition transform first then box-shadow */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+#streamingAppList .streamingAppWrapper:hover {
+  transform: translate(0, -6px);
+  box-shadow: 1px 1px 0px black,
+    2px 2px 0px black,
+    3px 3px 0px black,
+    4px 4px 0px black,
+    5px 5px 0px black;
 }
 
 .streamingAppWrapper .streamingApp {
@@ -198,7 +210,7 @@ header .container {
   background-color: var(--primary-yellow);
   border-bottom: solid 3px;
   overflow: hidden;
-  /* cursor: pointer; */
+  cursor: pointer;
   /* transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out; */
 }
 
@@ -324,6 +336,11 @@ header .container {
   background-color: white !important;
 }
 
+#suggestion>div {
+  cursor: pointer;
+  background-color: #21A67A !important;
+}
+
 .search-no-result {
   font-family: var(--content-font);
   font-weight: bold;
@@ -334,6 +351,22 @@ header .container {
 }
 
 /* MODAL CSS */
+
+.modal {
+  overflow: auto !important;
+}
+
+#modalBackdrop {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: hid;
+}
 
 .modal-content {
   border: solid 2px black !important;
@@ -354,7 +387,7 @@ header .container {
 
 #modalForm input[type="text"],
 #modalForm input[type="date"] {
-  border: solid 2px black !important;
+  border: solid 2px black;
   font-weight: bold;
   font-size: 18px;
 }
@@ -440,4 +473,105 @@ header .container {
 .modal-footer input[type="submit"]:enabled:hover {
   background-color: #512d91;
   color: white;
+}
+
+
+/* IMAGE MODAL */
+.imageModal {
+  z-index: 2000;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}
+
+.imageControl {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding-right: 20px;
+}
+
+.imageControl button {
+  width: 45px;
+  height: 50px;
+  color: #999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageControl button:hover {
+  color: white;
+}
+
+#zoomableImage {
+  max-height: 1000px;
+  min-height: 500px;
+  height: 500px;
+  max-width: 1000px;
+  min-width: 500px;
+  width: 100px;
+}
+
+.imageModal {
+  display: none;
+}
+
+/* BACK TO TOP */
+.back-to-top {
+  z-index: 1;
+  border-radius: 10px;
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  padding: 15px;
+  color: white !important;
+  background-color: #ff69b4 !important;
+  border: solid 2px black !important;
+  /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); */
+  transition: 0.2s ease-in-out;
+  visibility: hidden;
+}
+
+.back-to-top .fa-chevron-up {
+  font-size: 23px;
+  font-weight: 900;
+}
+
+.back-to-top:hover {
+  background-color: #db3d8c !important;
+  color: white !important;
+  transform: translate(0, -5px);
+  box-shadow: 2px 2px 0px #000000 !important;
+}
+
+/* TOAST */
+
+.toastDialog {
+  position: relative;
+  padding: 30px 50px 30px 70px;
+  background: rgb(255, 255, 255);
+  color: #000000;
+  border-radius: 5px;
+  margin: 5px 0px;
+  opacity: 0;
+  left: 20px;
+  animation: showToastDialog 500ms ease-in-out forwards;
+  pointer-events: fill !important;
+  word-wrap: break-word;
+  font-family: var(--content-font) !important;
+  font-weight: bold !important;
+  border: 2px solid black;
+  font-size: 16px !important;
+  box-shadow: 2px 2px 0px #000000 !important;
 }
