@@ -287,65 +287,6 @@
 									<label for="adultContent">Adult Content</label>
 								</div>
 
-								<div>
-									<input type="checkbox" class="typeOfContent" id="asianShows" value="Asian Shows">
-									<label for="asianShows">Asian Shows</label>
-								</div>
-								<div>
-									<input type="checkbox" class="typeOfContent" id="horror" value="Horror">
-									<label for="horror">Horror</label>
-								</div>
-								<div>
-									<input type="checkbox" class="typeOfContent" id="sports" value="Sports">
-									<label for="sports">Sports</label>
-								</div>
-								<div>
-									<input type="checkbox" class="typeOfContent" id="tvShows" value="TV Shows">
-									<label for="tvShows">TV
-										Shows</label>
-								</div>
-								<div>
-									<input type="checkbox" class="typeOfContent" id="varietyShows" value="Variety Shows">
-									<label for="varietyShows">Variety Shows</label>
-								</div>
-								<div>
-									<input type="checkbox" class="typeOfContent" id="indieFilms" value="Indie Films">
-									<label for="indieFilms">Indie Films</label>
-								</div>
-								<div>
-									<input type="checkbox" class="typeOfContent" id="koreanDramas" value="Korean Dramas">
-									<label for="koreanDramas">Korean Dramas</label>
-								</div>
-								<!-- <div>
-									<input type="checkbox" class="typeOfContent" id="eastAsianContent" value="East Asian Content">
-									<label for="eastAsianContent">East Asian Content</label>
-								</div> -->
-								<div>
-									<input type="checkbox" class="typeOfContent" id="familyFriendlyMovies" value="Family-friendly Movies">
-									<label for="familyFriendlyMovies">Family-friendly
-										Movies
-									</label>
-								</div>
-								<div>
-									<input type="checkbox" class="typeOfContent" id="cartoons" value="Cartoons">
-									<label for="cartoons">Cartoons</label>
-								</div>
-								<div>
-									<input type="checkbox" class="typeOfContent" id="originalMovies" value="Original Movies">
-									<label for="originalMovies">Original
-										Movies</label>
-								</div>
-								<!-- <div>
-									<input type="checkbox" class="typeOfContent" id="warnerMediaMovies" value="Warner Media Movies">
-									<label for="warnerMediaMovies">Warner Media Movies</label>
-								</div> -->
-								<div>
-									<input type="checkbox" class="typeOfContent" id="adultContent" value="Adult Content">
-									<label for="adultContent">Adult Content</label>
-								</div>
-
-
-
 								<div><input type="checkbox" class="typeOfContent others" id="others" value="">
 									<label for="others">Others</label>
 								</div>
