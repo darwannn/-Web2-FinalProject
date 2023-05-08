@@ -180,7 +180,7 @@ function resetFields() {
   $("#platformsMessage").html("").fadeOut(300);
   $("#typeOfContentsMessage").html("").fadeOut(300);
   $(
-    `#appName, #basePlan, #launchDate, #platforms, #typeOfContents, #picture`
+    `#appName, #basePlan, #launchDate, #platforms, #typeOfContents, #picture, #image_container`
   ).animate({borderColor: "black"},300);
 
   $("#pictureDisplay").attr("src", "img/white.jpg");
@@ -394,20 +394,23 @@ function validate() {
 }
 
 function validateInput(input, element, message, type) {
-
   if ($(`#${input}`).val().length === 0) {
+
     $(`#${input}`).animate({borderColor: "red"},300);
       $(`#${element}`).html(message).fadeIn(300);
+      if (type === "picture") {
+        $(`#image_container`).animate({borderColor: "red"},300);
+      }
   } else {
-    $(`#${element}`).fadeOut(300).html("");
+    $(`#${element}`).hide(300);
     $(`#${input}`).animate({borderColor: "black"},300);
     if (type === "number") {
       if (isNaN($(`#${input}`).val())) {
         $(`#${input}`).animate({borderColor: "red"},300);
-        $(`#${element}`).html("Must be a number").fadeIn(300);
+        $(`#${element}`).html("Base plan must be a number").fadeIn(300);
       } 
     } else {
-      $(`#${element}`).fadeOut(300).html("");
+      $(`#${element}`).hide(300);
     }
 
     if (type === "picture") {
@@ -417,21 +420,24 @@ function validateInput(input, element, message, type) {
 
       if (fileType !== "jpg" && fileType !== "jpeg" && fileType !== "png") {
         $(`#${input}`).animate({borderColor: "red"},300);
-        $(`#${element}`).html("Picture must only be .jpg, .jpeg, .png").fadeIn(300);;
+        $(`#${element}`).html("Picture should be in .jpg, .jpeg, .png format").fadeIn(300);;
         $(`#${input}`).val("");
         $("#pictureDisplay").attr("src", "img/white.jpg");
+        $("#pictureText").css("opacity", "1");
+        $(`#image_container`).animate({borderColor: "red"},300);
       } else {
 
-      $(`#${element}`).fadeOut(300).html("");
+      $(`#${element}`).hide(300);
         var fileSize = $(`#${input}`)[0].files[0].size / 1024 / 1024;
         if (fileSize > 5) {
           $(`#${input}`).animate({borderColor: "red"},300);
-          $(`#${element}`).html("File is too big").fadeIn(300);;
+          $(`#${element}`).html("Picture size should be less than 5MB.").fadeIn(300);;
           $(`#${input}`).val("");
           $("#pictureDisplay").attr("src", "img/white.jpg");
           $("#pictureText").css("opacity", "1");
+          $(`#image_container`).animate({borderColor: "red"},300);
         } else {
-            $(`#${element}`).fadeOut(300).html("");
+            $(`#${element}`).hide(300);
         }
       }
     }
@@ -441,10 +447,10 @@ function validateInput(input, element, message, type) {
       for (appName of appNames) {
         if (appName.toLowerCase() === inputAppName.toLowerCase()) {
           $(`#${input}`).animate({borderColor: "red"},300);
-          $(`#${element}`).html(`${appName} already exists.`).fadeIn(300);;
+          $(`#${element}`).html(`${appName} already exists`).fadeIn(300);;
           break;
         } else {
-            $(`#${element}`).fadeOut(300).html("");
+            $(`#${element}`).hide(300);
         }
       }
     }
@@ -521,7 +527,7 @@ function getSelectedCheckbox() {
     validateInput(
       "platforms",
       "platformsMessage",
-      "This field is required",
+      "Select at least one checkbox",
       "text"
     );
   });
@@ -542,7 +548,7 @@ function getTypeOfContent() {
   validateInput(
     "typeOfContents",
     "typeOfContentsMessage",
-    "This field is required",
+    "Select at least one checkbox",
     "checkbox"
   );
 }

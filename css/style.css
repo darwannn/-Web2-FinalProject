@@ -393,7 +393,16 @@ header .container {
 }
 
 #modalForm .input-message {
+  display: inline-block;
   color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+#typeOfContentsMessage,#platformsMessage {
+  display: inline-block;
+  margin-top: -100px;
+ /*  margin-left: 20px; */
 }
 
 .platform-checkbox-container {

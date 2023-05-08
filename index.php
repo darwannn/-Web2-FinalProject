@@ -60,7 +60,7 @@
 							<label class="form-label" class="picture">Picture: </label>
 
 							<div style="height: 300px; ">
-								<div style="width: 100%; height:100%; border:2px solid black; border-radius: 5px; position:relative" id="image_container">
+								<div style="width: 100%; height:100%; border:2px solid ; border-radius: 5px; position:relative" id="image_container">
 									<input type="file" name="picture" id="picture" accept=".png, .jpg, .jpeg" style="position:absolute; width:100%; height:100%; opacity:0;  z-index:100;" />
 									<div id="pictureText" style="position:absolute; width:100%; height:100%;z-index:50; display: flex;
 									justify-content: center;
