@@ -351,6 +351,7 @@ header .container {
 }
 
 /* MODAL CSS */
+
 .modal {
   overflow: auto !important;
 }
@@ -373,7 +374,6 @@ header .container {
   background-color: #f8d6b3 !important;
   font-family: var(--content-font);
   font-weight: bold;
-
 }
 
 .modal-header {
@@ -417,9 +417,14 @@ header .container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  align-items: start;
   gap: 5px;
+}
+
+.contents-checkbox-container .check-col {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
 }
 
 .platform-checkbox-container div,
