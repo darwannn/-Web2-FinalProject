@@ -12,6 +12,10 @@
   --header-font: 'Lexend', sans-serif;
   --content-font: 'Quicksand', sans-serif;
 }
+
+#deleteModalYes {
+  background-color: var(--accent-text);
+}
 .input-group-text {
   background-color: var(--accent-purple)!important;
   color: var( --accent-text)!important;
@@ -110,6 +114,7 @@ header .container {
   margin-top: 50px;
   gap: 1rem;
 }
+
 
 #streamingAppList .streamingAppWrapper {
   max-width: 420px;

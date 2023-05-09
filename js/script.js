@@ -1,5 +1,6 @@
 var appNames = [];
 var selectedAppNames = [];
+var toDeleteState;
 
 $(document).ready(function () {
   readStreamingApp();
@@ -20,6 +21,12 @@ $(document).ready(function () {
     appModalHide();
     resetFields();
   });
+  $("#deleteModalNo").on("click", function (e) {
+    deleteModalHide();
+    resetFields();
+    
+  });
+  
 
   $("#clearButton").on("click", function (e) {
     $("#search").val("");
@@ -29,8 +36,10 @@ $(document).ready(function () {
 
 
     $("#deleteAll").on("click", function () {
-    var appNames = selectedAppNames.join(", ")
-    deleteSelectedStreamingApp(appNames);
+    var appNames = selectedAppNames.join(",")
+    toDeleteState = "many";
+        $("#deleteModalMessage").html(`Are you sure you want to delete:<br>&nbsp;&nbsp;&bull;&nbsp;${appNames.replace(/,/g, '<br>&nbsp;&nbsp;&bull;&nbsp;')}`);
+    deleteModalShow(appNames);
   });
 
 
@@ -154,14 +163,16 @@ function readStreamingApp() {
             });
             console.log(selectedAppNames); 
             if (selectedAppNames.length > 1) {
-              $("#deleteAll").slideDown(300); 
+              $("#deleteAll").show(); 
             } else {
-              $("#deleteAll").slideUp(300);
+              $("#deleteAll").hide();
             }
           }
         });
       });
 
+     
+      $("#streamingAppList").children().last().css("margin-right", "auto");
 
 
     } else {
@@ -225,34 +236,46 @@ function resetFields() {
   $(".modal").scrollTop(0);
 
   $('input[type="checkbox"]').prop("checked", false);
+  $("#deleteAll").hide();
+  $('.ui-selected').removeClass('ui-selected');
+}
+
+function clickDelete(toDelete) {
+  /*   $("#deleteModalMessage").html(`Are you sure you want to delete:<br>&nbsp;&nbsp;&bull;&nbsp;${toDelete.replace(/,/g, '<br>&nbsp;&nbsp;&bull;&nbsp;')}`); */
+  $("#deleteModalMessage").html(`Are you sure you want to delete ${toDelete}?` );
+  toDeleteState = "one";
+  deleteModalShow(toDelete);
+
 }
 
 function deleteStreamingApp(toDelete) {
-  if (confirm(`Do you really want to delete ${toDelete}?`)) {
     http = new XMLHttpRequest();
     http.onreadystatechange = function () {
       if (http.readyState == 4 && http.status == 200) {
         createToast(http.responseText, "success");
         readStreamingApp();
+        deleteModalHide();
       }
     };
     http.open("GET", `process/deleteProcess.php?d=${toDelete}`, true);
     http.send();
-  }
 }
 
 function deleteSelectedStreamingApp(toDelete) {
-  if (confirm(`Do you really want to delete ${toDelete}?`)) {
+
     http = new XMLHttpRequest();
     http.onreadystatechange = function () {
       if (http.readyState == 4 && http.status == 200) {
         createToast(http.responseText, "success");
         readStreamingApp();
+        deleteModalHide(http.responseText);
+        console.log
+        $("#deleteAll").hide();
       }
     };
     http.open("GET", `process/deleteSelectedProcess.php?d=${toDelete}`, true);
     http.send();
-  }
+  
 }
 
 function searchStreamingApp(toSearch) {
@@ -272,6 +295,7 @@ function searchStreamingApp(toSearch) {
         document.getElementById("suggestion").innerHTML = "";
         document.getElementById("streamingAppList").innerHTML =
           http.responseText;
+          /* $("#streamingAppList").children().last().css("margin-right", "auto"); */
       } else {
         document.getElementById("streamingAppList").innerHTML =
           "<i class='fas fa-spinner fa-spin'></i>";
@@ -442,12 +466,11 @@ function validateInput(input, element, message, type) {
       if (type === "picture") {
         $(`#image_container`).animate({borderColor: "red"},300);
       }
-      if (type === "number") {
+      /* if (type === "number") {
         $(`.input-basePlan`).animate({borderColor: "red"},300);
-      }
+      } */
   } else {
-    $(`#${element}`).hide(300);
-    $(`#${input}`).animate({borderColor: "black"},300);
+
     
     if (type === "number") {
       
@@ -456,9 +479,11 @@ function validateInput(input, element, message, type) {
         $(`#${element}`).html("Base plan must be a number").fadeIn(300);
       } else {
         $(`.input-basePlan`).animate({borderColor: "black"},300);
+        $(`#${element}`).hide(300);
       }
     } else {
       $(`#${element}`).hide(300);
+      $(`#${input}`).animate({borderColor: "black"},300);
     }
 
     if (type === "picture") {
@@ -474,8 +499,7 @@ function validateInput(input, element, message, type) {
         $("#pictureText").css("opacity", "1");
         $(`#image_container`).animate({borderColor: "red"},300);
       } else {
-
-      $(`#${element}`).hide(300);
+   
         var fileSize = $(`#${input}`)[0].files[0].size / 1024 / 1024;
         if (fileSize > 5) {
           $(`#${input}`).animate({borderColor: "red"},300);
@@ -486,6 +510,7 @@ function validateInput(input, element, message, type) {
           $(`#image_container`).animate({borderColor: "red"},300);
         } else {
             $(`#${element}`).hide(300);
+            $(`#image_container`).animate({borderColor: "black"},300);
         }
       }
     }
@@ -498,7 +523,7 @@ function validateInput(input, element, message, type) {
           $(`#${element}`).html(`${appName} already exists`).fadeIn(300);;
           break;
         } else {
-            $(`#${element}`).hide(300);
+            /* $(`#${element}`).hide(300); */
         }
       }
     }
@@ -668,6 +693,30 @@ function appModalShow() {
 
 function appModalHide() {
   $("#streamingAppModal").slideUp(300);
+  $("#modalBackdrop").css("display", "none");
+		$("body").css("overflow", "auto");
+}
+
+
+function deleteModalShow(toDelete) {
+  $("#deleteModal").slideDown(300);
+  $("#modalBackdrop").css("display", "flex");
+		$("body").css("overflow", "hidden");
+
+    $("#deleteModalYes").on("click", function (e) {
+      if(toDeleteState == "one") {
+        deleteStreamingApp(toDelete)
+        console.log("1");
+      } else if (toDeleteState == "many") {
+deleteSelectedStreamingApp(toDelete)
+console.log("2");
+      }
+     
+  });
+}
+
+function deleteModalHide() {
+  $("#deleteModal").slideUp(300);
   $("#modalBackdrop").css("display", "none");
 		$("body").css("overflow", "auto");
 }

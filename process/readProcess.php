@@ -62,7 +62,7 @@ nakahiwalay yung div para yung mga platforms nasa loob ng div na may class na pl
 
 
 	$output .= "<div class='action-wrapper'><button class='edit-btn' onclick='getToEditStreamingApp(`" . $appName . "`); document.getElementById(`modalButton`).disabled = false;'><i class='fa-solid fa-pen-to-square'></i></button>
-	<button class='delete-btn' onclick='deleteStreamingApp(`" . $appName . "`)'><i class='fa-solid fa-trash'></i></button>
+	<button class='delete-btn' onclick='clickDelete(`" . $appName . "`)'><i class='fa-solid fa-trash'></i></button>
 			
 		</div></div>
 			";

@@ -5,7 +5,7 @@ $xml->load("../streamingApps.xml");
 $streamingApps = $xml->getElementsByTagName("streamingApp");
 
 $toDelete = $_REQUEST["d"];
-$appNamesToDelete = explode(", ", $toDelete);
+$appNamesToDelete = explode(",", $toDelete);
 
 foreach ($appNamesToDelete as $appName) {
 	foreach ($streamingApps as $streamingApp) {

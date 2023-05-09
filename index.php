@@ -204,6 +204,29 @@
 			</div>
 		</div>
 	</div>
+
+
+
+
+	<div class="modal" id="deleteModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="deleteModalLabel">Delete?</h5>
+				</div>
+				<div class="modal-body">
+					<div id="deleteModalMessage" class="p-4"></div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn" id="deleteModalNo">No</button>
+					<button type="button" class="btn" id="deleteModalYes">Yes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 	<header>
 		<div class="container">
 			<div class="title-wrapper">
