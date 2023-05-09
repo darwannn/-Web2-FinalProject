@@ -172,7 +172,7 @@ function readStreamingApp() {
       });
 
      
-      $("#streamingAppList").children().last().css("margin-right", "auto");
+/*       $("#streamingAppList").children().last().css({marginRight:"auto"}); */
 
 
     } else {
