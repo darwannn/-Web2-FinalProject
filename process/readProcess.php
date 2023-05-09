@@ -40,7 +40,7 @@ number_format para magkaron ng .00 yung number tapos lahat ng thousands mag karo
 	$output .= "
 			<div class='main-content'>
 			<div class='content-label'>Base Plan:</div>
-			<div class='basePlan content-val'>PHP " . number_format($basePlan, 2, '.', ',') . " / month</div>
+			<div class='basePlan content-val'>" . ($basePlan == 0 ? "FREE" : "₱ " . number_format($basePlan, 2, '.', ',') . " / month") . "</div>
 			<div class='content-label'>Launch Date:</div>
 			<div class='launchDate content-val'>$launchDate</div>";
 

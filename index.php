@@ -26,12 +26,28 @@
 
 </head>
 
+<style>
+	.ui-selected {
+		background-color: #FFDB58 !important;
+		font-weight: bold;
+
+	}
+
+	.ui-selectable {
+		margin-top: 20px !important;
+	}
+
+	#deleteAll {
+		display: none;
+	}
+</style>
+
 <body>
 
 	<div class="toastList" id="toastList"></div>
 
 	<div id="modalBackdrop"></div>
-	<div class="modal " id="streamingAppModal">
+	<div class="modal" id="streamingAppModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -49,7 +65,11 @@
 
 						<div>
 							<label class="form-label" for="basePlan">Base Plan:</label>
-							<input type="text" name="basePlan" class="form-control" id="basePlan" autocomplete="off" required />
+							<div class="input-group input-basePlan">
+								<span class="input-group-text">₱</span>
+								<input type="text" name="basePlan" class="form-control" id="basePlan" autocomplete="off" required />
+								<span class="input-group-text">.00 / month</span>
+							</div>
 							<span class="input-message" id="basePlanMessage"></span>
 						</div>
 
@@ -164,7 +184,7 @@
 								<div><input type="checkbox" class="typeOfContent others" id="others" value="">
 									<label for="others">Others</label>
 								</div>
-								<input type="text" name="otherContent" class="form-control" id="otherContent" style="opacity:0;" autocomplete="off" />
+								<input type="text" name="otherContent" class="form-control" id="otherContent" style="opacity:0;" autocomplete="off" title="" />
 							</div>
 						</div>
 						<div><input type="hidden" name="editPicture" id="editPicture" autocomplete="off" readonly />
@@ -189,7 +209,7 @@
 			<div class="title-wrapper">
 				<p class="h1">Streaming Apps for Legitimate Contents</p>
 			</div>
-			<div class="add-btn-wrapper">
+			<div class="add-btn-wrapper d-flex">
 				<div id="create"> <i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add Content</div>
 			</div>
 		</div>
@@ -202,7 +222,11 @@
 		</div>
 		<div id="suggestion"></div>
 	</div>
-
+	<div class="container delete-btn-wrapper mt-4 ">
+		<div id="deleteAll" class="">
+			<i class="fa-solid fa-trash me-2"></i>Delete All
+		</div>
+	</div>
 	<div class="container" id="streamingAppList">
 	</div>
 	<div class="imageModal">

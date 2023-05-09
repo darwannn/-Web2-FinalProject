@@ -6,6 +6,9 @@ $(document).ready(function () {
   getSelectedCheckbox();
   resetFields();
 
+  $(
+    `.search-container `
+  ).animate({borderColor: "black"},300);
   $("#search").on("keyup", function (e) {
     suggestionStreamingApp(e.target.value);
   });
@@ -24,11 +27,19 @@ $(document).ready(function () {
     $("#suggestion").html("");
   });
 
+
+    $("#deleteAll").on("click", function () {
+    var appNames = selectedAppNames.join(", ")
+    deleteSelectedStreamingApp(appNames);
+  });
+
+
   $("#create").on("click", function () {
     getAppNames();
     $("#appName").prop({readOnly: false});
     resetFields();
     changeModalState("Add");
+    $("#streamingAppModalLabel").html("Add Content");
     validate();
   });
 
@@ -114,7 +125,7 @@ function readStreamingApp() {
   http.onreadystatechange = function () {
     if (http.readyState == 4 && http.status == 200) {
       document.getElementById("streamingAppList").innerHTML = http.responseText;
-      $("#streamingAppList").sortable();
+      /* $("#streamingAppList").sortable(); */
    
       var animation = document.querySelectorAll(".anim");
       var animationIntersection = new IntersectionObserver(function(i){
@@ -130,6 +141,29 @@ function readStreamingApp() {
       animation.forEach (function(animations){
           animationIntersection.observe(animations);
       });
+
+
+          /* JQUERY UI Selectable */
+      $(function() {
+        $("#streamingAppList").selectable({
+          cancel: ".img-wrapper, .action-wrapper",
+          stop: function() {
+             selectedAppNames = [];
+            $(".ui-selected .appName").each(function() { 
+              selectedAppNames.push($(this).html()); 
+            });
+            console.log(selectedAppNames); 
+            if (selectedAppNames.length > 1) {
+              $("#deleteAll").slideDown(300); 
+            } else {
+              $("#deleteAll").slideUp(300);
+            }
+          }
+        });
+      });
+
+
+
     } else {
       document.getElementById("streamingAppList").innerHTML =
         "<i class='fas fa-spinner fa-spin fa-2xl' ></i>";
@@ -180,7 +214,7 @@ function resetFields() {
   $("#platformsMessage").html("").fadeOut(300);
   $("#typeOfContentsMessage").html("").fadeOut(300);
   $(
-    `#appName, #basePlan, #launchDate, #platforms, #typeOfContents, #picture, #image_container`
+    `#appName, #basePlan, #launchDate, #platforms, #typeOfContents, #picture, #image_container,.input-basePlan`
   ).animate({borderColor: "black"},300);
 
   $("#pictureDisplay").attr("src", "img/white.jpg");
@@ -207,8 +241,8 @@ function deleteStreamingApp(toDelete) {
   }
 }
 
-/* function deleteSelectedStreamingApp(toDelete) {
-  if (confirm(`Do you really want to delete all the selected items?`)) {
+function deleteSelectedStreamingApp(toDelete) {
+  if (confirm(`Do you really want to delete ${toDelete}?`)) {
     http = new XMLHttpRequest();
     http.onreadystatechange = function () {
       if (http.readyState == 4 && http.status == 200) {
@@ -219,13 +253,17 @@ function deleteStreamingApp(toDelete) {
     http.open("GET", `process/deleteSelectedProcess.php?d=${toDelete}`, true);
     http.send();
   }
-} */
+}
 
 function searchStreamingApp(toSearch) {
   const suggestionBox = document.getElementById("suggestion");
   if (toSearch.length == 0) {
     document.getElementById("suggestion").innerHTML = "";
+    
     createToast("Please provide the name of a streaming app", "error");
+    $(".search-container ").animate({borderColor: "red"}, 300)
+          .delay(1000)
+          .animate({borderColor: "black"}, 300);
   } else {
     $("#suggestion").slideUp(300);
     http = new XMLHttpRequest();
@@ -318,6 +356,7 @@ function getToEditStreamingApp(toGet) {
 
             if (otherTypeOfContent != "") {
               document.getElementById("otherContent").style.opacity = "1";
+
               document.getElementById("otherContent").value =
                 otherTypeOfContent.join(", ");
               document.getElementById("others").checked = true;
@@ -325,15 +364,17 @@ function getToEditStreamingApp(toGet) {
               document.getElementById("otherContent").style.pointerEvents =
                 "auto";
             }
-            document.getElementById(
-              "typeOfContents"
-            ).value = `${listedTypeOfContent.join(", ")}, ${
-              document.getElementById("otherContent").value
-            }`;
+            if (listedTypeOfContent.length === 1) {
+              document.getElementById("typeOfContents").value = listedTypeOfContent[0];
+            } else {
+              document.getElementById("typeOfContents").value = `${listedTypeOfContent.join(", ")}, ${document.getElementById("otherContent").value}`;
+            }
+            
 
             document.getElementById("appName").readOnly = true;
             document.getElementById("appName").style.pointerEvents = "none";
             changeModalState("Edit");
+            $("#streamingAppModalLabel").html("Edit Content");
             validate();
             break;
           } else {
@@ -401,14 +442,21 @@ function validateInput(input, element, message, type) {
       if (type === "picture") {
         $(`#image_container`).animate({borderColor: "red"},300);
       }
+      if (type === "number") {
+        $(`.input-basePlan`).animate({borderColor: "red"},300);
+      }
   } else {
     $(`#${element}`).hide(300);
     $(`#${input}`).animate({borderColor: "black"},300);
+    
     if (type === "number") {
+      
       if (isNaN($(`#${input}`).val())) {
-        $(`#${input}`).animate({borderColor: "red"},300);
+        $(`.input-basePlan`).animate({borderColor: "red"},300);
         $(`#${element}`).html("Base plan must be a number").fadeIn(300);
-      } 
+      } else {
+        $(`.input-basePlan`).animate({borderColor: "black"},300);
+      }
     } else {
       $(`#${element}`).hide(300);
     }
@@ -494,13 +542,17 @@ function getAppNames() {
 function getSelectedCheckbox() {
   $("#others").on("change", function () {
     if ($("#otherContent").css("opacity") == 0) {
+      
       $("#otherContent")
         .animate({
           opacity: 1,
         }).css({
           pointerEvents: "auto",
         })
-        .prop({readOnly: false});
+        .prop({readOnly: false}).attr('title', 'If you wish to add multiple types of content, please separate them with comma');
+        $( function() {
+          $( "#otherContent" ).tooltip();
+        } );
     } else {
       $("#otherContent")
         .animate({
@@ -508,7 +560,10 @@ function getSelectedCheckbox() {
         }).css({
           pointerEvents: "none",
         })
-        .prop({readOnly: true});
+        .prop({readOnly: true}).removeAttr('title');
+        $(function() {
+          $("#otherContent").tooltip("destroy");
+        });
     }
 
     if (!$("#others").prop("checked")) {

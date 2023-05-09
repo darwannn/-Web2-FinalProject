@@ -49,7 +49,7 @@ foreach ($streamingApps as $streamingApp) {
 			$output .= "
 			<div class='main-content'>
 			<div class='content-label'>Base Plan:</div>
-			<div class='basePlan content-val'>PHP " . number_format($basePlan, 2, '.', ',') . " / month</div>
+			<div class='basePlan content-val'>" . ($basePlan == 0 ? "FREE" : "₱ " . number_format($basePlan, 2, '.', ',') . " / month") . "</div>
 			<div class='content-label'>Launch Date:</div>
 			<div class='launchDate content-val'>$launchDate</div>";
 
@@ -96,7 +96,7 @@ nakahiwalay yung div para yung mga platforms nasa loob ng div na may class na pl
 			$output .= "
 			<div class='main-content'>
 			<div class='content-label'>Base Plan:</div>
-			<div class='basePlan content-val'>PHP " . number_format($basePlan, 2, '.', ',') . " / month</div>
+			<div class='basePlan content-val'>" . ($basePlan == 0 ? "FREE" : "₱ " . number_format($basePlan, 2, '.', ',') . " / month") . "</div>
 			<div class='content-label'>Launch Date:</div>
 			<div class='launchDate content-val'>$launchDate</div>";
 
